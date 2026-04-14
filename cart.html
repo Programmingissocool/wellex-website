@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cart – Wellex</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">wellex</a>
+  <div class="nav-links">
+    <a href="shop.html">Shop</a>
+    <a href="features.html">Features</a>
+    <a href="about.html">About</a>
+    <a href="#">Blog</a>
+    <a href="cart.html" class="nav-cart-icon active" style="font-size:1.2rem;">🛒
+      <span class="cart-badge" style="display:none">0</span>
+    </a>
+    <a href="#" class="nav-account">Account</a>
+  </div>
+</nav>
+
+<div class="cart-page">
+  <div class="cart-inner">
+
+    <!-- CART ITEMS -->
+    <div class="cart-items-section">
+      <!-- Rendered by JS -->
+    </div>
+
+    <!-- ORDER SUMMARY -->
+    <div class="cart-summary">
+      <div class="cart-summary-title">Order Summary</div>
+
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span class="summary-subtotal">$0.00</span>
+      </div>
+      <div class="summary-row">
+        <span>Shipping</span>
+        <span class="summary-shipping" style="color:var(--green)">FREE</span>
+      </div>
+      <div class="summary-row">
+        <span>Tax (estimated)</span>
+        <span>Calculated at checkout</span>
+      </div>
+      <div class="summary-row total">
+        <span>Total</span>
+        <span class="summary-total-val">$0.00</span>
+      </div>
+
+      <!-- Promo Code -->
+      <div class="promo-input">
+        <input type="text" placeholder="Promo code"/>
+        <button onclick="showToast('Invalid promo code')">Apply</button>
+      </div>
+
+      <a href="checkout.html">
+        <button class="cart-summary-btn">Proceed to Checkout →</button>
+      </a>
+
+      <div style="text-align:center;margin-top:16px">
+        <div style="display:flex;justify-content:center;gap:16px;font-size:1.4rem;margin-bottom:8px">
+          💳 🔒 📦
+        </div>
+        <div style="font-size:0.75rem;color:var(--gray)">Secure checkout · Free returns · 2-year warranty</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTINUE SHOPPING -->
+  <div class="cart-recommendations-wrap">
+    <div class="cart-recommendations">
+      <div class="cart-recommendations-head">
+        <h3>Explore more finishes</h3>
+        <p>These are the same watch visuals used in the Colors section, so shoppers see the real product instead of placeholder graphics.</p>
+      </div>
+      <div class="cart-recommendations-grid">
+        <article class="cart-recommendation-card">
+          <a href="product.html?color=classic-black" class="cart-recommendation-media">
+            <img src="assets/classic-black.png" alt="Classic Black Wellex watch"/>
+          </a>
+          <div class="cart-recommendation-body">
+            <div class="cart-recommendation-name">Classic Black</div>
+            <p>The most minimal finish. Quiet, sharp, and easy to wear with anything.</p>
+            <button class="cart-recommendation-btn" onclick="addToCart('classic-black','subscription')">Add to Cart</button>
+          </div>
+        </article>
+
+        <article class="cart-recommendation-card">
+          <a href="product.html?color=midnight-navy" class="cart-recommendation-media">
+            <img src="assets/navy.png" alt="Midnight Navy Wellex watch"/>
+          </a>
+          <div class="cart-recommendation-body">
+            <div class="cart-recommendation-name">Midnight Navy</div>
+            <p>A cooler technical look with a darker premium tone than standard black.</p>
+            <button class="cart-recommendation-btn" onclick="addToCart('midnight-navy','subscription')">Add to Cart</button>
+          </div>
+        </article>
+
+        <article class="cart-recommendation-card">
+          <a href="product.html?color=forest-green" class="cart-recommendation-media">
+            <img src="assets/forest-green.png" alt="Forest Green Wellex watch"/>
+          </a>
+          <div class="cart-recommendation-body">
+            <div class="cart-recommendation-name">Forest Green</div>
+            <p>A softer, grounded colorway that still reads premium and distinctive.</p>
+            <button class="cart-recommendation-btn" onclick="addToCart('forest-green','subscription')">Add to Cart</button>
+          </div>
+        </article>
+
+        <article class="cart-recommendation-card">
+          <a href="product.html?color=crimson-red" class="cart-recommendation-media">
+            <img src="assets/orange.jpeg" alt="Wellex watch with original orange band"/>
+          </a>
+          <div class="cart-recommendation-body">
+            <div class="cart-recommendation-name">Crimson Red</div>
+            <p>The boldest option, with the strongest lifestyle-photo presence on the site.</p>
+            <button class="cart-recommendation-btn" onclick="addToCart('crimson-red','subscription')">Add to Cart</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-logo">wellex</div>
+        <p class="footer-brand-text">Premium health & fitness tracking for athletes who demand more.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Product</div>
+        <div class="footer-col-links">
+          <a href="shop.html">Shop</a>
+          <a href="features.html">Features</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <div class="footer-col-links">
+          <a href="about.html">About</a>
+          <a href="#">Blog</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Support</div>
+        <div class="footer-col-links">
+          <a href="#">Help</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Wellex. All rights reserved.</span>
+      <span>Privacy · Terms</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
