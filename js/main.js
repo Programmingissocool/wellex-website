@@ -1,7 +1,7 @@
-// ─── WELLEX WEBSITE JAVASCRIPT v2.0 ────────────────────────────
+// в”Ђв”Ђв”Ђ WELLEX WEBSITE JAVASCRIPT v2.0 в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 
 // Cart state
-let cart = JSON.parse(localStorage.getItem('wellex-cart')) || [];
+let cart = JSON.parse(localStorage.getItem('wellec-cart')) || [];
 
 const products = {
   'classic-black': { name: 'Classic Black', bandColor: '#0D0D0D', bandLight: false, price: 279, subPrice: 179 },
@@ -10,7 +10,7 @@ const products = {
   'crimson-red':   { name: 'Crimson Red',   bandColor: '#7A1515', bandLight: false, price: 279, subPrice: 179 },
 };
 
-// ─── WATCH SVG GENERATOR ────────────────────────────────────────
+// в”Ђв”Ђв”Ђ WATCH SVG GENERATOR в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 function generateWatchSVG(bandColor, size = 'medium', isLight = false) {
   const sizes = {
     small:  { w: 80,  h: 190, vb: '0 0 140 320' },
@@ -108,7 +108,7 @@ function lightenColor(hex, amount) {
   return '#' + ((r << 16)|(g << 8)|b).toString(16).padStart(6,'0');
 }
 
-// ─── CART FUNCTIONS ──────────────────────────────────────────────
+// в”Ђв”Ђв”Ђ CART FUNCTIONS в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 function addToCart(productId, planType = 'subscription', overridePrice = null, discountPercent = 0) {
   const product = products[productId];
   if (!product) return;
@@ -129,7 +129,7 @@ function addToCart(productId, planType = 'subscription', overridePrice = null, d
     });
   }
   saveCart(); updateCartBadge();
-  showToast(`${product.name} added to cart! 🎉`);
+  showToast(`${product.name} added to cart! рџЋ‰`);
 }
 
 function removeFromCart(index) {
@@ -144,7 +144,7 @@ function updateQty(index, delta) {
   else { saveCart(); if (document.querySelector('.cart-items-section')) renderCart(); }
 }
 
-function saveCart() { localStorage.setItem('wellex-cart', JSON.stringify(cart)); }
+function saveCart() { localStorage.setItem('wellec-cart', JSON.stringify(cart)); }
 function getCartTotal() { return cart.reduce((sum,i) => sum + i.price * i.qty, 0); }
 function getCartCount() { return cart.reduce((sum,i) => sum + i.qty, 0); }
 
@@ -153,7 +153,7 @@ function updateCartBadge() {
   if (badge) { const c = getCartCount(); badge.textContent = c; badge.style.display = c > 0 ? 'flex' : 'none'; }
 }
 
-// ─── RENDER CART PAGE ────────────────────────────────────────────
+// в”Ђв”Ђв”Ђ RENDER CART PAGE в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 function renderCart() {
   const itemsSection = document.querySelector('.cart-items-section');
   const summarySection = document.querySelector('.cart-summary');
@@ -161,7 +161,7 @@ function renderCart() {
 
   const itemsHTML = cart.length === 0
     ? `<div style="text-align:center;padding:60px 20px;color:var(--gray)">
-        <div style="font-size:3rem;margin-bottom:16px">🛍️</div>
+        <div style="font-size:3rem;margin-bottom:16px">рџ›ЌпёЏ</div>
         <p style="font-size:1rem;margin-bottom:24px">Your cart is empty</p>
         <a href="shop.html" class="btn-primary">Shop Now</a>
        </div>`
@@ -169,12 +169,12 @@ function renderCart() {
         <div class="cart-item">
           <div class="cart-item-image">${generateWatchSVG(item.bandColor,'small',item.bandLight||false)}</div>
           <div>
-            <div class="cart-item-name">Wellex Band – ${item.name}</div>
+            <div class="cart-item-name">Wellec Band вЂ“ ${item.name}</div>
             <div class="cart-item-variant">${item.plan === 'subscription'
-              ? '📦 Monthly Subscription — $19/mo · Band included FREE'
-              : '🔁 One-Time Purchase — Band Only · $249'}</div>
+              ? 'рџ“¦ Monthly Subscription вЂ” $19/mo В· Band included FREE'
+              : 'рџ”Ѓ One-Time Purchase вЂ” Band Only В· $249'}</div>
             <div class="cart-quantity">
-              <button class="qty-btn" onclick="updateQty(${i},-1)">−</button>
+              <button class="qty-btn" onclick="updateQty(${i},-1)">в€’</button>
               <span class="qty-value">${item.qty}</span>
               <button class="qty-btn" onclick="updateQty(${i},1)">+</button>
             </div>
@@ -198,7 +198,7 @@ function renderCart() {
   }
 }
 
-// ─── RENDER CHECKOUT ITEMS ───────────────────────────────────────
+// в”Ђв”Ђв”Ђ RENDER CHECKOUT ITEMS в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 function renderCheckoutItems() {
   const container = document.querySelector('.checkout-items-list');
   if (!container) return;
@@ -207,8 +207,8 @@ function renderCheckoutItems() {
     <div class="checkout-item">
       <div class="checkout-item-img">${generateWatchSVG(item.bandColor,'small',item.bandLight||false)}</div>
       <div>
-        <div class="checkout-item-name">Wellex Band – ${item.name}</div>
-        <div class="checkout-item-variant">Qty: ${item.qty} · ${item.plan==='subscription'?'$19/mo Subscription':'$249 One-Time'}</div>
+        <div class="checkout-item-name">Wellec Band вЂ“ ${item.name}</div>
+        <div class="checkout-item-variant">Qty: ${item.qty} В· ${item.plan==='subscription'?'$19/mo Subscription':'$249 One-Time'}</div>
       </div>
       <div class="checkout-item-price">$${(item.price*item.qty).toFixed(2)}</div>
     </div>`).join('');
@@ -216,13 +216,13 @@ function renderCheckoutItems() {
   document.querySelectorAll('.checkout-total').forEach(el => el.textContent=`$${subtotal.toFixed(2)}`);
 }
 
-// ─── TOAST ───────────────────────────────────────────────────────
+// в”Ђв”Ђв”Ђ TOAST в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 function showToast(message) {
   let toast = document.querySelector('.toast');
   if (!toast) {
     toast = document.createElement('div');
     toast.className = 'toast';
-    toast.innerHTML = `<span class="toast-icon">✅</span><span class="toast-text"></span>`;
+    toast.innerHTML = `<span class="toast-icon">вњ…</span><span class="toast-text"></span>`;
     document.body.appendChild(toast);
   }
   toast.querySelector('.toast-text').textContent = message;
@@ -230,7 +230,7 @@ function showToast(message) {
   setTimeout(() => toast.classList.remove('show'), 3200);
 }
 
-// ─── COLOR SWITCHER (product.html) ──────────────────────────────
+// в”Ђв”Ђв”Ђ COLOR SWITCHER (product.html) в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 function initColorSwitcher() {
   const options = document.querySelectorAll('.color-option');
   options.forEach(opt => {
@@ -255,7 +255,7 @@ function updateDisplay(pid) {
     }, 200);
   }
   const t = document.getElementById('product-title');
-  if (t) t.textContent = `Wellex Band – ${p.name}`;
+  if (t) t.textContent = `Wellec Band вЂ“ ${p.name}`;
   const cn = document.getElementById('selected-color-name');
   if (cn) cn.textContent = p.name;
   const bn = document.getElementById('breadcrumb-name');
@@ -266,7 +266,7 @@ function updateDisplay(pid) {
   });
 }
 
-// ─── HERO WATCH ANIMATION ────────────────────────────────────────
+// в”Ђв”Ђв”Ђ HERO WATCH ANIMATION в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 function initHeroWatch() {
   const heroWatch = document.getElementById('hero-watch');
   if (!heroWatch) return;
@@ -286,7 +286,7 @@ function initHeroWatch() {
   }, 3000);
 }
 
-// ─── SHOP / CART PAGE WATCH RENDERS ─────────────────────────────
+// в”Ђв”Ђв”Ђ SHOP / CART PAGE WATCH RENDERS в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 function initShopWatches() {
   document.querySelectorAll('[data-watch-color]').forEach(el => {
     const color = el.dataset.watchColor;
@@ -296,7 +296,7 @@ function initShopWatches() {
   });
 }
 
-// ─── NAV HIGHLIGHT ───────────────────────────────────────────────
+// в”Ђв”Ђв”Ђ NAV HIGHLIGHT в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 function initNav() {
   const page = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a').forEach(a => {
@@ -304,7 +304,7 @@ function initNav() {
   });
 }
 
-// ─── WVI GAUGE ANIMATION ─────────────────────────────────────────
+// в”Ђв”Ђв”Ђ WVI GAUGE ANIMATION в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 function animateWVI(targetId, targetValue) {
   const el = document.getElementById(targetId);
   if (!el) return;
@@ -343,7 +343,7 @@ const fitFinderConfig = {
       name: 'Original Orange',
       aura: 'Marathon',
       glow: 'radial-gradient(circle, rgba(255,154,76,0.42) 0%, rgba(216,89,22,0.20) 46%, rgba(13,13,13,0) 80%)',
-      copy: 'You score as energetic, visible, and action-led. The orange Wellex look suits people who want movement, attention, and momentum.',
+      copy: 'You score as energetic, visible, and action-led. The orange Wellec look suits people who want movement, attention, and momentum.',
       reason: 'Best for outgoing personalities, sport-minded routines, and high-energy first impressions.'
     }
   },
@@ -843,7 +843,7 @@ function initSiteReviewForm() {
 
     const stars = document.createElement('span');
     stars.className = 'review-card-stars';
-    stars.textContent = `${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}`;
+    stars.textContent = `${'в…'.repeat(rating)}${'в†'.repeat(5 - rating)}`;
 
     topline.append(tag, useCasePill);
     meta.append(author, stars);
@@ -930,7 +930,7 @@ function initScrollMotion() {
   window.addEventListener('resize', requestParallax);
 }
 
-// ─── CHECKOUT FORM ───────────────────────────────────────────────
+// в”Ђв”Ђв”Ђ CHECKOUT FORM в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 function initCheckoutForm() {
   const form = document.getElementById('checkout-form');
   if (!form) return;
@@ -942,13 +942,13 @@ function placeOrderAction() {
   const inner = document.querySelector('.checkout-inner');
   if (inner) inner.innerHTML = `
     <div style="grid-column:1/-1;text-align:center;padding:80px 20px">
-      <div style="font-size:5rem;margin-bottom:24px">🎉</div>
+      <div style="font-size:5rem;margin-bottom:24px">рџЋ‰</div>
       <div style="display:inline-block;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);color:var(--green);padding:8px 20px;border-radius:20px;font-size:0.8rem;font-weight:700;letter-spacing:1px;margin-bottom:24px;text-transform:uppercase">Order Confirmed</div>
       <h2 style="font-size:2.5rem;font-weight:900;letter-spacing:-1.5px;margin-bottom:16px">Order Placed!</h2>
       <p style="color:var(--light-gray);margin-bottom:8px;font-size:1rem;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7">
-        Your Wellex Band is on its way. Activate your subscription in the app and start earning DeFi yield through Emotional Mining.
+        Your Wellec Band is on its way. Activate your subscription in the app and start earning DeFi yield through Emotional Mining.
       </p>
-      <p style="color:var(--gray);font-size:0.85rem;margin-bottom:40px">Estimated delivery: 5–7 business days · App setup guide sent to your email.</p>
+      <p style="color:var(--gray);font-size:0.85rem;margin-bottom:40px">Estimated delivery: 5вЂ“7 business days В· App setup guide sent to your email.</p>
       <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
         <a href="index.html" class="btn-primary">Back to Home</a>
         <a href="shop.html" class="btn-outline">Keep Shopping</a>
@@ -956,7 +956,7 @@ function placeOrderAction() {
     </div>`;
 }
 
-// ─── INIT ────────────────────────────────────────────────────────
+// в”Ђв”Ђв”Ђ INIT в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 document.addEventListener('DOMContentLoaded', () => {
   updateCartBadge();
   initNav();
