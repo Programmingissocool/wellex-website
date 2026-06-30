@@ -1,0 +1,10 @@
+*.log
+.codex_tmp/
+node_modules/
+.expo/
+Wellex_recovered.html
+Wellex_recovered_files/
+wellex_recovered2.html
+wellex_recovered2_files/
+wellex_idk.html
+wellex_idk_files/

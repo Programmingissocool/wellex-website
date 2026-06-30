@@ -3,37 +3,24 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Checkout вЂ“ Wellec</title>
+  <title>Checkout - Wellex</title>
   <link rel="stylesheet" href="css/style.css"/>
 </head>
-<body>
+<body class="dashboard-home whoop-home topic-page">
+<div class="page-photo-backdrop" aria-hidden="true">
+  <img src="assets/wellex_front_back.jpg" alt="">
+</div>
 
-<nav>
-  <a class="nav-logo" href="index.html">wellec</a>
-  <div class="nav-links">
-    <a href="shop.html">Shop</a>
-    <a href="features.html">Features</a>
-    <a href="about.html">About</a>
-    <a href="#">Blog</a>
-    <a href="cart.html" class="nav-cart-icon" style="font-size:1.2rem;">рџ›’
-      <span class="cart-badge" style="display:none">0</span>
-    </a>
-    <a href="#" class="nav-account">Account</a>
-  </div>
-</nav>
+<header data-shared-header data-active-page="colors"></header>
 
 <div class="checkout-page">
   <div class="checkout-inner">
-
-    <!-- FORM SECTION -->
     <div class="checkout-form-section">
       <h1 class="checkout-page-title">Checkout</h1>
 
       <form id="checkout-form" onsubmit="return false">
-
-        <!-- Shipping -->
         <div class="checkout-section">
-          <div class="checkout-section-title">рџ“¦ Shipping Information</div>
+          <div class="checkout-section-title">Shipping Information</div>
           <div class="form-grid">
             <div class="form-group">
               <label class="form-label">First Name</label>
@@ -77,26 +64,25 @@
           </div>
         </div>
 
-        <!-- Shipping Method -->
         <div class="checkout-section">
-          <div class="checkout-section-title">рџљљ Shipping Method</div>
+          <div class="checkout-section-title">Shipping Method</div>
           <div style="display:flex;flex-direction:column;gap:12px">
-            <label style="display:flex;align-items:center;justify-content:space-between;background:rgba(74,222,128,0.06);border:1.5px solid rgba(74,222,128,0.3);border-radius:12px;padding:16px 20px;cursor:pointer">
+            <label style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.18);border-radius:12px;padding:16px 20px;cursor:pointer">
               <div style="display:flex;align-items:center;gap:12px">
-                <input type="radio" name="shipping" value="free" checked style="accent-color:var(--green)"/>
+                <input type="radio" name="shipping" value="free" checked style="accent-color:#ffffff"/>
                 <div>
                   <div style="font-size:0.875rem;font-weight:600">Standard Shipping</div>
-                  <div style="font-size:0.75rem;color:var(--gray)">5вЂ“7 business days</div>
+                  <div style="font-size:0.75rem;color:var(--gray)">5-7 business days</div>
                 </div>
               </div>
-              <span style="color:var(--green);font-weight:700">FREE</span>
+              <span style="color:#ffffff;font-weight:700">FREE</span>
             </label>
             <label style="display:flex;align-items:center;justify-content:space-between;background:var(--dark-2);border:1px solid var(--dark-border);border-radius:12px;padding:16px 20px;cursor:pointer">
               <div style="display:flex;align-items:center;gap:12px">
-                <input type="radio" name="shipping" value="express" style="accent-color:var(--green)"/>
+                <input type="radio" name="shipping" value="express" style="accent-color:#ffffff"/>
                 <div>
                   <div style="font-size:0.875rem;font-weight:600">Express Shipping</div>
-                  <div style="font-size:0.75rem;color:var(--gray)">2вЂ“3 business days</div>
+                  <div style="font-size:0.75rem;color:var(--gray)">2-3 business days</div>
                 </div>
               </div>
               <span style="font-weight:700">$12.99</span>
@@ -104,13 +90,12 @@
           </div>
         </div>
 
-        <!-- Payment -->
         <div class="checkout-section">
-          <div class="checkout-section-title">рџ’і Payment</div>
+          <div class="checkout-section-title">Payment</div>
           <div style="display:flex;gap:12px;margin-bottom:20px">
-            <button type="button" style="flex:1;background:rgba(74,222,128,0.08);border:1.5px solid rgba(74,222,128,0.3);color:var(--white);padding:12px;border-radius:10px;font-size:0.85rem;font-weight:600;cursor:pointer">рџ’і Card</button>
-            <button type="button" style="flex:1;background:var(--dark-2);border:1px solid var(--dark-border);color:var(--lighter-gray);padding:12px;border-radius:10px;font-size:0.85rem;font-weight:600;cursor:pointer">рџЌЋ Pay</button>
-            <button type="button" style="flex:1;background:var(--dark-2);border:1px solid var(--dark-border);color:var(--lighter-gray);padding:12px;border-radius:10px;font-size:0.85rem;font-weight:600;cursor:pointer">рџ…їпёЏ PayPal</button>
+            <button type="button" style="flex:1;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.18);color:var(--white);padding:12px;border-radius:10px;font-size:0.85rem;font-weight:600;cursor:pointer">Card</button>
+            <button type="button" style="flex:1;background:var(--dark-2);border:1px solid var(--dark-border);color:var(--lighter-gray);padding:12px;border-radius:10px;font-size:0.85rem;font-weight:600;cursor:pointer">Apple Pay</button>
+            <button type="button" style="flex:1;background:var(--dark-2);border:1px solid var(--dark-border);color:var(--lighter-gray);padding:12px;border-radius:10px;font-size:0.85rem;font-weight:600;cursor:pointer">PayPal</button>
           </div>
           <div class="form-grid">
             <div class="form-group full">
@@ -123,7 +108,7 @@
             </div>
             <div class="form-group">
               <label class="form-label">CVV</label>
-              <input class="form-input" type="text" placeholder="вЂўвЂўвЂў" maxlength="4" required/>
+              <input class="form-input" type="text" placeholder="123" maxlength="4" required/>
             </div>
             <div class="form-group full">
               <label class="form-label">Name on Card</label>
@@ -132,23 +117,19 @@
           </div>
         </div>
 
-        <!-- Place Order Button (mobile visible) -->
         <button type="submit" class="checkout-place-btn" onclick="placeOrder()">
-          Place Order в†’
+          Place Order ->
         </button>
-
       </form>
     </div>
 
-    <!-- ORDER SUMMARY SIDEBAR -->
     <div class="checkout-summary">
       <div class="checkout-summary-title">Order Summary</div>
 
-      <!-- Items rendered by JS -->
       <div class="checkout-items-list">
         <div style="text-align:center;padding:20px;color:var(--gray);font-size:0.875rem">
           No items in cart.
-          <br/><a href="shop.html" style="color:var(--green);font-weight:600">Shop now в†’</a>
+          <br/><a href="shop.html" style="color:#ffffff;font-weight:600">Shop now -></a>
         </div>
       </div>
 
@@ -158,62 +139,27 @@
       </div>
       <div class="summary-row">
         <span>Shipping</span>
-        <span style="color:var(--green)">FREE</span>
+        <span style="color:#ffffff">FREE</span>
       </div>
       <div class="summary-row total">
         <span>Total</span>
-        <span class="checkout-total" style="color:var(--green)">$0.00</span>
+        <span class="checkout-total" style="color:#ffffff">$0.00</span>
       </div>
 
       <button type="button" class="checkout-place-btn" onclick="placeOrder()">
-        Place Order в†’
+        Place Order ->
       </button>
 
       <div style="text-align:center;margin-top:16px">
         <div style="font-size:0.72rem;color:var(--gray);display:flex;align-items:center;justify-content:center;gap:6px">
-          рџ”’ <span>256-bit SSL encryption В· Secure payment</span>
+          <span>256-bit SSL encryption - Secure payment</span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div>
-        <div class="footer-brand-logo">wellec</div>
-        <p class="footer-brand-text">Premium health & fitness tracking for athletes who demand more.</p>
-      </div>
-      <div>
-        <div class="footer-col-title">Product</div>
-        <div class="footer-col-links">
-          <a href="shop.html">Shop</a>
-          <a href="features.html">Features</a>
-        </div>
-      </div>
-      <div>
-        <div class="footer-col-title">Company</div>
-        <div class="footer-col-links">
-          <a href="about.html">About</a>
-          <a href="#">Blog</a>
-        </div>
-      </div>
-      <div>
-        <div class="footer-col-title">Support</div>
-        <div class="footer-col-links">
-          <a href="#">Help</a>
-          <a href="#">Contact</a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>В© 2026 Wellec. All rights reserved.</span>
-      <span>Privacy В· Terms</span>
-    </div>
-  </div>
-</footer>
+<footer data-shared-footer></footer>
 
 <script src="js/main.js"></script>
 <script>
@@ -227,13 +173,13 @@ function placeOrder() {
   saveCart();
   document.querySelector('.checkout-inner').innerHTML = `
     <div style="grid-column:1/-1;text-align:center;padding:80px 20px">
-      <div style="font-size:5rem;margin-bottom:24px">рџЋ‰</div>
-      <div style="display:inline-block;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);color:var(--green);padding:8px 20px;border-radius:20px;font-size:0.8rem;font-weight:700;letter-spacing:1px;margin-bottom:24px;text-transform:uppercase">Order Confirmed</div>
+      <div style="font-size:5rem;margin-bottom:24px">OK</div>
+      <div style="display:inline-block;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:var(--white);padding:8px 20px;border-radius:20px;font-size:0.8rem;font-weight:700;letter-spacing:1px;margin-bottom:24px;text-transform:uppercase">Order Confirmed</div>
       <h2 style="font-size:2.5rem;font-weight:900;letter-spacing:-1.5px;margin-bottom:16px">Order Placed!</h2>
       <p style="color:var(--light-gray);margin-bottom:8px;font-size:1rem;max-width:440px;margin-left:auto;margin-right:auto;line-height:1.7">
-        Thank you for your Wellec order. You'll receive a confirmation email shortly with your tracking info.
+        Thank you for your Wellex order. You'll receive a confirmation email shortly with your tracking info.
       </p>
-      <p style="color:var(--gray);font-size:0.85rem;margin-bottom:40px">Estimated delivery: 5вЂ“7 business days</p>
+      <p style="color:var(--gray);font-size:0.85rem;margin-bottom:40px">Estimated delivery: 5-7 business days</p>
       <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
         <a href="index.html" class="btn-primary">Back to Home</a>
         <a href="shop.html" class="btn-outline">Keep Shopping</a>
@@ -245,3 +191,4 @@ function placeOrder() {
 </script>
 </body>
 </html>
+

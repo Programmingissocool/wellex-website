@@ -1,504 +1,545 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Wellec | Web Dashboard</title>
-  <link rel="stylesheet" href="css/style.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wellex | Overview</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="dashboard-home">
-<div class="page-photo-backdrop" aria-hidden="true"></div>
+<body class="dashboard-home whoop-home">
+<div class="page-photo-backdrop" aria-hidden="true">
+  <img src="assets/wellex_front_back.jpg" alt="">
+</div>
 
-<nav class="dashboard-nav">
-  <a class="nav-logo" href="index.html">wellec</a>
-  <div class="nav-links">
-    <a href="#overview">Overview</a>
-    <a href="#colors">Colors</a>
-    <a href="#wallet">Wallet</a>
-    <a href="#network">Network</a>
-    <a href="#ai">AI Agents</a>
-    <a href="#trust" class="nav-account">Open Dashboard</a>
-  </div>
-</nav>
+<header data-shared-header data-active-page="overview"></header>
 
-<section class="dashboard-hero" id="overview">
-  <div class="dashboard-hero-shell">
-    <div class="dashboard-hero-copy">
-      <div class="hero-badge">05_DASHBOARD / WEB FINANCE HUB</div>
-      <h1 class="dashboard-title">Wellness in the app. Finance in the dashboard.</h1>
-      <p class="dashboard-sub">
-        Wellec separates the mobile wellness experience from the web financial layer. The dashboard handles
-        wallet activity, WellecVault staking, partner operations, analytics, and AI-guided execution in one interface.
-      </p>
-      <div class="hero-btns">
-        <a href="#wallet" class="btn-primary">View Wallet Flow</a>
-        <a href="#ai" class="btn-outline">See AI Operations</a>
-      </div>
-      <div class="dashboard-metrics">
-        <div class="dashboard-metric">
-          <span class="dashboard-metric-label">Total Balance</span>
-          <strong>$12,450</strong>
-        </div>
-        <div class="dashboard-metric">
-          <span class="dashboard-metric-label">Current WVI</span>
-          <strong id="hero-wvi" data-wvi-animate="72">0</strong>
-        </div>
-        <div class="dashboard-metric">
-          <span class="dashboard-metric-label">Monthly Yield</span>
-          <strong>12%</strong>
-        </div>
-      </div>
-      <p class="dashboard-disclaimer">
-        Potential yield depends on WVI and market conditions. Yield is not guaranteed.
-      </p>
-    </div>
-
-    <div class="dashboard-preview">
-      <div class="glass-panel dashboard-preview-main">
-        <div class="panel-head">
+<section class="section watch-story-stage" id="overview">
+  <div class="watch-story-pin">
+    <div class="watch-story-media-shell">
+      <video class="watch-story-video" autoplay muted loop playsinline poster="assets/wellex_front_back.jpg" data-ambient-video>
+        <source src="assets/wellex_watch_video.mp4" type="video/mp4">
+      </video>
+      <div class="watch-story-overlay"></div>
+      <div class="watch-story-hero-copy">
+        <div class="watch-story-hero-kicker">
+          <span class="watch-story-hero-mark">
+            <img src="assets/wellex-logo-mark.svg" alt="">
+          </span>
           <div>
-            <span class="eyebrow">WellecVault</span>
-            <h2>AI Auto-Optimize</h2>
-          </div>
-          <span class="status-pill">100% insured</span>
-        </div>
-        <div class="preview-grid">
-          <div class="balance-card">
-            <span>Total Balance</span>
-            <strong>$12,450.00</strong>
-            <small>Deposit $10,000 / Yield $1,950 / Reinvested $500</small>
-          </div>
-          <div class="gauge-card">
-            <div class="gauge-ring">
-              <div class="gauge-ring-inner">
-                <span>WVI</span>
-                <strong>72</strong>
-              </div>
-            </div>
-            <small>Target monthly yield: 12%</small>
-          </div>
-          <div class="preview-table">
-            <div class="preview-row">
-              <span>Claim counter</span>
-              <strong>2 free left</strong>
-            </div>
-            <div class="preview-row">
-              <span>Lock-up</span>
-              <strong>30 days</strong>
-            </div>
-            <div class="preview-row">
-              <span>Forecast</span>
-              <strong>$1,200 / mo</strong>
-            </div>
+            <span>Wear Wellex Daily</span>
+            <small>Daily</small>
           </div>
         </div>
-        <div class="dashboard-actions">
-          <a href="#wallet" class="mini-action">Withdraw</a>
-          <a href="#wallet" class="mini-action">Reinvest</a>
-          <a href="#wallet" class="mini-action active">Top Up</a>
-          <a href="#wallet" class="mini-action">Export</a>
+        <h1 class="watch-story-hero-title">Better health.<br>Better days.<br>Better <em>you.</em></h1>
+        <p class="watch-story-hero-sub">Track. Understand. Improve. Wellex helps your body respond better across the whole day.</p>
+        <div class="watch-story-hero-actions">
+          <a href="product.html?color=classic-black" class="btn-primary">Explore Wellex</a>
+          <a href="#complete-health" class="watch-story-link">Learn more</a>
         </div>
       </div>
-
-      <div class="glass-panel floating-note floating-note-left">
-        <span class="eyebrow">Partner Tree</span>
-        <strong>23 active partners</strong>
-        <p>Network volume: $127,400 / mo</p>
+      <div class="watch-story-logo">
+        <img src="assets/wellex-logo-mark.svg" alt="Wellex logo">
       </div>
-
-      <div class="glass-panel floating-note floating-note-right">
-        <span class="eyebrow">AI Briefing</span>
-        <strong>3 priorities today</strong>
-        <p>Recover dormant referrals, prep webinar CTA, push to next rank.</p>
+      <div class="watch-story-caption">
+        <span>WEAR WELLEX DAILY</span>
+        <strong>Health clarity for every hour.</strong>
       </div>
+      <div class="watch-story-day-rail" aria-label="Day phases">
+        <button class="watch-story-day is-active" type="button" data-day-phase="morning" aria-pressed="true">
+          <span class="watch-story-day-dot">☼</span>
+          <strong>Morning Mode</strong>
+        </button>
+        <button class="watch-story-day" type="button" data-day-phase="afternoon" aria-pressed="false">
+          <span class="watch-story-day-dot">◌</span>
+          <strong>Afternoon Mode</strong>
+        </button>
+        <button class="watch-story-day" type="button" data-day-phase="evening" aria-pressed="false">
+          <span class="watch-story-day-dot">◔</span>
+          <strong>Evening Mode</strong>
+        </button>
+        <button class="watch-story-day" type="button" data-day-phase="night" aria-pressed="false">
+          <span class="watch-story-day-dot">◑</span>
+          <strong>Night Mode</strong>
+        </button>
+      </div>
+      <div class="watch-story-rail">
+        <article class="watch-story-card" data-story-tone="focus" data-story-index="0">
+          <div class="section-label">01 / Daily Wear</div>
+          <div class="watch-story-card-visual watch-story-visual-wear">
+            <div class="watch-story-visual-metric">
+              <span>Wear Time</span>
+              <strong>24/7</strong>
+            </div>
+            <div class="watch-story-visual-bars" aria-hidden="true">
+              <span style="height: 52%"></span>
+              <span style="height: 68%"></span>
+              <span style="height: 80%"></span>
+              <span style="height: 92%"></span>
+            </div>
+          </div>
+          <h2 class="section-title">Wear daily. Know more.</h2>
+          <p class="section-sub">Daily wear reveals the full picture.</p>
+          <div class="watch-story-card-foot">
+            <span>Full-day signal</span>
+            <strong>Wear > Read > Decide</strong>
+          </div>
+        </article>
+        <article class="watch-story-card" data-story-tone="sensor" data-story-index="1">
+          <div class="section-label">02 / Stronger Habits</div>
+          <div class="watch-story-card-visual watch-story-visual-habits">
+            <div class="watch-story-visual-chip is-on">Sleep</div>
+            <div class="watch-story-visual-chip is-on">Move</div>
+            <div class="watch-story-visual-chip">Hydrate</div>
+            <div class="watch-story-visual-chip is-on">Recover</div>
+          </div>
+          <h2 class="section-title">Consistency makes it useful.</h2>
+          <p class="section-sub">Health data works best when wear becomes routine.</p>
+          <div class="watch-story-card-foot">
+            <span>Habit value</span>
+            <strong>Consistency compounds</strong>
+          </div>
+        </article>
+        <article class="watch-story-card" data-story-tone="band" data-story-index="2">
+          <div class="section-label">03 / Full-Day Read</div>
+          <div class="watch-story-card-visual watch-story-visual-day">
+            <div class="watch-story-visual-line" aria-hidden="true">
+              <span></span>
+            </div>
+            <div class="watch-story-visual-timeline">
+              <span>AM</span>
+              <span>NOON</span>
+              <span>PM</span>
+              <span>NIGHT</span>
+            </div>
+          </div>
+          <h2 class="section-title">See the whole day.</h2>
+          <p class="section-sub">Track how strain, calm, and recovery connect.</p>
+          <div class="watch-story-card-foot">
+            <span>Body context</span>
+            <strong>Morning to night</strong>
+          </div>
+        </article>
+        <article class="watch-story-card is-active" data-story-tone="system" data-story-index="3">
+          <div class="section-label">04 / Better Decisions</div>
+          <div class="watch-story-card-visual watch-story-visual-decisions">
+            <div class="watch-story-visual-arrow" aria-hidden="true"></div>
+            <div class="watch-story-visual-decision-copy">
+              <span>Readiness</span>
+              <strong>Train / Recover</strong>
+            </div>
+          </div>
+          <h2 class="section-title">Turn data into better choices.</h2>
+          <p class="section-sub">Know when to push, recover, and reset.</p>
+          <div class="watch-story-card-foot">
+            <span>Better decisions</span>
+            <strong>Clear choices. Better outcomes.</strong>
+          </div>
+        </article>
+      </div>
+      <div class="watch-story-benefits" aria-label="Wellex benefits">
+        <div class="watch-story-benefit">
+          <span>Full-Day Insights</span>
+          <p>Understand how your body responds all day long.</p>
+        </div>
+        <div class="watch-story-benefit">
+          <span>Recovery Tracking</span>
+          <p>Measure what matters. Recover smarter.</p>
+        </div>
+        <div class="watch-story-benefit">
+          <span>Built For Life</span>
+          <p>Lightweight. Durable. Made to move with you.</p>
+        </div>
+        <div class="watch-story-benefit">
+          <span>Privacy First</span>
+          <p>Your data stays yours. Always.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-      <div class="watch-photo-stack" aria-label="Wellec watch photography">
-        <figure class="watch-photo-card watch-photo-card-main">
-          <img src="assets/forest-green.png" alt="Wellec watch with forest green band on wrist"/>
+<section class="section wear-all-day-section">
+  <div class="wear-all-day-copy">
+    <div class="section-label">Built To Be Worn 24/7</div>
+    <h2 class="section-title">Built to stay on all day.</h2>
+    <p class="section-sub">Light for sleep. Durable for work and training.</p>
+    <div class="wear-all-day-points">
+      <div class="wear-point" data-wear-point="0">
+        <span class="wear-point-icon" aria-hidden="true">⌁</span>
+        <strong>Zero distractions</strong>
+        <span>Low-noise design for all-day wear.</span>
+      </div>
+      <div class="wear-point is-active" data-wear-point="1">
+        <span class="wear-point-icon" aria-hidden="true">⋮</span>
+        <strong>Always-on sensing</strong>
+        <span>Continuous tracking across the full day.</span>
+      </div>
+      <div class="wear-point" data-wear-point="2">
+        <span class="wear-point-icon" aria-hidden="true">◔</span>
+        <strong>Comfort that lasts</strong>
+        <span>Soft fit. Low profile. Easy to keep on.</span>
+      </div>
+      <div class="wear-point" data-wear-point="3">
+        <span class="wear-point-icon" aria-hidden="true">▣</span>
+        <strong>One device, all day</strong>
+        <span>One device for work, movement, and sleep.</span>
+      </div>
+    </div>
+  </div>
+  <div class="wear-all-day-visual">
+    <div class="wear-video-shell">
+      <video class="wear-video" autoplay muted loop playsinline poster="assets/wellex_front_back.jpg" data-ambient-video>
+        <source src="assets/wellex_watch_video.mp4" type="video/mp4">
+      </video>
+      <div class="wear-video-overlay"></div>
+    </div>
+    <div class="wear-benefit-strip" aria-label="Wearability benefits">
+      <span>24/7 Wearability</span>
+      <span>Durable by design</span>
+      <span>Lightweight feel</span>
+    </div>
+    <div class="wear-video-caption">
+      <span>24/7 Wearability</span>
+      <strong>Made to stay on.</strong>
+    </div>
+  </div>
+</section>
+
+<section class="dashboard-hero whoop-hero">
+  <div class="dashboard-hero-media" aria-hidden="true">
+    <video class="dashboard-hero-video" autoplay muted loop playsinline poster="assets/wellex_front_back.jpg" data-ambient-video>
+      <source src="assets/wellex_watch_video.mp4" type="video/mp4">
+    </video>
+    <div class="dashboard-hero-still"></div>
+  </div>
+  <div class="dashboard-hero-shell whoop-hero-shell">
+    <div class="dashboard-hero-copy whoop-hero-copy scroll-reveal is-visible" style="--reveal-delay: 0ms;">
+      <div class="hero-badge">24/7 WEARABLE / RECOVERY</div>
+      <h1 class="dashboard-title">Know your body. Move better.</h1>
+      <p class="dashboard-sub">Wellex turns continuous wear into clear daily guidance.</p>
+      <div class="hero-btns">
+        <a href="#join" class="btn-primary">Get Wellex</a>
+        <a href="foundation.html" class="btn-outline">See Foundation</a>
+      </div>
+      <div class="whoop-hero-points">
+        <div class="whoop-hero-point">
+          <span>Core focus</span>
+          <strong>Sleep, strain, recovery</strong>
+        </div>
+        <div class="whoop-hero-point">
+          <span>System</span>
+          <strong>Band + app + web</strong>
+        </div>
+        <div class="whoop-hero-point">
+          <span>Daily value</span>
+          <strong>Clear guidance from body data</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="whoop-hero-visual">
+      <div class="whoop-device-card">
+        <img src="assets/wellex-black-workout.png" alt="Wellex in a black workout performance setting">
+      </div>
+      <div class="whoop-floating-stat whoop-stat-one">
+        <span>Primary tagline</span>
+        <strong>Wear daily. Recover better.</strong>
+      </div>
+      <div class="whoop-floating-stat whoop-stat-two">
+        <span>Daily signal</span>
+        <strong>24/7 wear</strong>
+        <small>Sleep, strain, recovery</small>
+      </div>
+      <div class="whoop-floating-stat whoop-stat-three">
+        <span>Product idea</span>
+        <strong>Premium guidance without noise.</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section whoop-health-picture-section" id="complete-health">
+  <div class="whoop-health-picture-head">
+    <div class="section-label">Complete Health Picture</div>
+    <h2 class="section-title">See the full health picture.</h2>
+    <p class="section-sub">Sleep, strain, recovery, and heart data in one view.</p>
+    <div class="whoop-health-quicklist">
+      <button class="whoop-health-quickitem is-active" type="button" data-health-jump="0">
+        <span>Night recovery</span>
+        <strong>Optimize your sleep.</strong>
+      </button>
+      <button class="whoop-health-quickitem" type="button" data-health-jump="1">
+        <span>Daily readiness</span>
+        <strong>Know your readiness.</strong>
+      </button>
+      <button class="whoop-health-quickitem" type="button" data-health-jump="2">
+        <span>Heart context</span>
+        <strong>Stay close to heart health.</strong>
+      </button>
+      <button class="whoop-health-quickitem" type="button" data-health-jump="3">
+        <span>Long-term health</span>
+        <strong>Build long-term health.</strong>
+      </button>
+      <button class="whoop-health-quickitem" type="button" data-health-jump="4">
+        <span>Shared wellness</span>
+        <strong>Healthy living. Shared.</strong>
+      </button>
+    </div>
+  </div>
+  <div class="whoop-health-picture-showcase">
+    <article class="whoop-health-feature whoop-health-feature-large whoop-health-feature-lead">
+      <figure class="whoop-health-feature-media">
+        <img src="assets/wellex-feature-sleep.png" alt="Wellex sleep optimization feature">
+      </figure>
+      <div class="whoop-health-feature-copy">
+        <span class="whoop-health-feature-kicker">Night Recovery</span>
+        <h3>Optimize your sleep.</h3>
+        <p>Track sleep quality, rhythm, and recovery.</p>
+        <span class="whoop-health-feature-arrow" aria-hidden="true">→</span>
+      </div>
+    </article>
+    <article class="whoop-health-feature">
+      <figure class="whoop-health-feature-media">
+        <img src="assets/wellex-shoes.png" alt="Wellex body feeling and readiness feature">
+      </figure>
+      <div class="whoop-health-feature-copy">
+        <span class="whoop-health-feature-kicker">Daily Readiness</span>
+        <h3>Know your readiness.</h3>
+        <p>Use HRV, resting heart rate, strain, and recovery together.</p>
+        <span class="whoop-health-feature-arrow" aria-hidden="true">→</span>
+      </div>
+    </article>
+    <article class="whoop-health-feature">
+      <figure class="whoop-health-feature-media">
+        <img src="assets/wellex-grandma.png" alt="Wellex heart health feature for daily monitoring">
+      </figure>
+      <div class="whoop-health-feature-copy">
+        <span class="whoop-health-feature-kicker">Heart Context</span>
+        <h3>Stay close to heart health.</h3>
+        <p>Follow daily heart rate and resting patterns.</p>
+        <span class="whoop-health-feature-arrow" aria-hidden="true">→</span>
+      </div>
+    </article>
+    <article class="whoop-health-feature whoop-health-feature-wide">
+      <figure class="whoop-health-feature-media">
+        <img src="assets/wellex-swimming.png" alt="Wellex longevity and recovery feature by the pool">
+      </figure>
+      <div class="whoop-health-feature-copy">
+        <span class="whoop-health-feature-kicker">Long-Term Health</span>
+        <h3>Build long-term health.</h3>
+        <p>Use better habits to support a longer prime.</p>
+        <span class="whoop-health-feature-arrow" aria-hidden="true">→</span>
+      </div>
+    </article>
+    <article class="whoop-health-feature">
+      <figure class="whoop-health-feature-media">
+        <img src="assets/father_son.png" alt="Father and son using Wellex as part of a shared wellness journey">
+      </figure>
+      <div class="whoop-health-feature-copy">
+        <span class="whoop-health-feature-kicker">Shared Wellness</span>
+        <h3>Healthy living. Shared.</h3>
+        <p>Sync your wellness journey.</p>
+        <span class="whoop-health-feature-arrow" aria-hidden="true">в†’</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section whoop-guidance-section" id="how-it-works">
+  <div class="whoop-guidance-head">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">Guidance you can use.</h2>
+    <p class="section-sub">Less noise. Better next steps.</p>
+  </div>
+  <div class="whoop-guidance-shell">
+    <div class="whoop-guidance-steps" role="tablist" aria-label="How Wellex works">
+      <button class="whoop-guidance-step is-active" type="button" data-guidance-target="wear" aria-pressed="true">
+        <strong>Wear it 24/7</strong>
+        <span>Keep the signal continuous.</span>
+      </button>
+      <button class="whoop-guidance-step" type="button" data-guidance-target="measure" aria-pressed="false">
+        <strong>Measure what matters</strong>
+        <span>Track sleep, strain, recovery, and rhythm.</span>
+      </button>
+      <button class="whoop-guidance-step" type="button" data-guidance-target="guidance" aria-pressed="false">
+        <strong>Receive guidance</strong>
+        <span>Turn body data into next steps.</span>
+      </button>
+      <button class="whoop-guidance-step" type="button" data-guidance-target="change" aria-pressed="false">
+        <strong>Make changes</strong>
+        <span>Build better habits over time.</span>
+      </button>
+    </div>
+    <div class="whoop-guidance-panels">
+      <article class="whoop-guidance-panel is-active" data-guidance-panel="wear">
+        <figure class="whoop-guidance-media">
+          <img src="assets/swim_wellex.png" alt="Wellex being worn while swimming">
         </figure>
-        <figure class="watch-photo-card watch-photo-card-side">
-          <img src="assets/wellec2.jpg" alt="Wellec watch with original orange band on wrist"/>
+        <div class="whoop-guidance-copy">
+          <span>Wear it 24/7</span>
+          <h3>Continuous wear builds the picture.</h3>
+          <p>Keeping it on turns isolated readings into one story.</p>
+        </div>
+      </article>
+      <article class="whoop-guidance-panel" data-guidance-panel="measure">
+        <figure class="whoop-guidance-media">
+          <img src="assets/wellex-feature-body-metrics.png" alt="Wellex body metrics overview">
         </figure>
-      </div>
+        <div class="whoop-guidance-copy">
+          <span>Measure what matters</span>
+          <h3>See more than one score.</h3>
+          <p>Read sleep, strain, recovery, and heart data together.</p>
+        </div>
+      </article>
+      <article class="whoop-guidance-panel" data-guidance-panel="guidance">
+        <figure class="whoop-guidance-media">
+          <img src="assets/wellex-feature-heart-health.png" alt="Wellex heart health dashboard">
+        </figure>
+        <div class="whoop-guidance-copy">
+          <span>Receive guidance</span>
+          <h3>Turn tracking into action.</h3>
+          <p>The app translates signals into useful guidance.</p>
+        </div>
+      </article>
+      <article class="whoop-guidance-panel" data-guidance-panel="change">
+        <figure class="whoop-guidance-media">
+          <img src="assets/wellex-feature-sleep.png" alt="Wellex sleep optimization view">
+        </figure>
+        <div class="whoop-guidance-copy">
+          <span>Make changes</span>
+          <h3>Small changes should compound.</h3>
+          <p>Better sleep and recovery should lead to better results.</p>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
-<section class="section home-colors-section" id="colors">
-  <div class="home-colors-copy">
-    <div class="section-label">Watch Colors</div>
-    <h2 class="section-title">Choose the finish through a full scene, not just a swatch.</h2>
-    <p class="section-sub">
-      Each color now sits inside its own context so the user understands the mood, function, and impression before opening the detail page.
-      Scroll through the stories and feel how each version of Wellec changes character.
-    </p>
+<section class="section whoop-insights-section" id="insights">
+  <div class="whoop-insights-head">
+    <div class="section-label">Insight Engine</div>
+    <h2 class="section-title">From metrics to insight.</h2>
+    <p class="section-sub">Wellex connects data to decisions.</p>
   </div>
-  <div class="home-colors-grid">
-    <a class="home-color-card aura-card zoom-card aura-business" href="product.html?color=classic-black" data-fit-launch="classic-black" data-zoom-image="assets/classic-black.png">
-      <div class="aura-card-bg">
-        <img src="assets/businessman_black.png" alt="Business setting for the Classic Black Wellec watch"/>
-      </div>
-      <button class="zoom-toggle" type="button" aria-pressed="false">Enable zoom</button>
-      <div class="zoom-pane" aria-hidden="true"></div>
-      <div class="aura-card-sheen" aria-hidden="true"></div>
-      <div class="aura-card-watch">
-        <img src="assets/classic-black.png" alt="Classic Black Wellec watch"/>
-      </div>
-      <div class="aura-card-content">
-        <div class="home-color-swatch" style="background:#0D0D0D"></div>
-        <div class="aura-card-mode">Business</div>
-        <h3>Classic Black</h3>
-        <p>Sharper, quieter, and built for focused days, formal settings, and confident minimalism.</p>
-        <span>Choose Black</span>
-      </div>
-    </a>
-    <a class="home-color-card aura-card zoom-card aura-navy" href="product.html?color=midnight-navy" data-fit-launch="midnight-navy" data-zoom-image="assets/navy.png">
-      <div class="aura-card-bg">
-        <img src="assets/lecturer_watch.png" alt="Lecturer setting for the Midnight Navy Wellec watch"/>
-      </div>
-      <button class="zoom-toggle" type="button" aria-pressed="false">Enable zoom</button>
-      <div class="zoom-pane" aria-hidden="true"></div>
-      <div class="aura-card-sheen" aria-hidden="true"></div>
-      <div class="aura-card-watch">
-        <div class="variant-photo variant-photo-thumb variant-midnight-navy variant-photo-real">
-          <img src="assets/navy.png" alt="Midnight Navy Wellec watch"/>
+  <div class="whoop-insight-tabs" role="tablist" aria-label="Wellex insight topics">
+    <button class="whoop-insight-tab is-active" type="button" data-insight-target="sleep" aria-pressed="true">Sleep</button>
+    <button class="whoop-insight-tab" type="button" data-insight-target="strain" aria-pressed="false">Strain</button>
+    <button class="whoop-insight-tab" type="button" data-insight-target="recovery" aria-pressed="false">Recovery</button>
+    <button class="whoop-insight-tab" type="button" data-insight-target="stress" aria-pressed="false">Stress</button>
+    <button class="whoop-insight-tab" type="button" data-insight-target="behaviors" aria-pressed="false">Behaviors</button>
+    <button class="whoop-insight-tab" type="button" data-insight-target="health" aria-pressed="false">Health</button>
+  </div>
+  <div class="whoop-insight-panels">
+    <article class="whoop-insight-panel is-active" data-insight-panel="sleep">
+      <figure class="whoop-insight-media">
+        <img src="assets/wellex-app-preview-2.png" alt="Wellex app sleep insights">
+      </figure>
+      <div class="whoop-insight-copy">
+        <span>Sleep</span>
+        <h3>Optimize sleep.</h3>
+        <p>Track sleep quality, consistency, and rhythm.</p>
+        <div class="whoop-insight-points">
+          <div><strong>01</strong><span>Track nightly rhythm.</span></div>
+          <div><strong>02</strong><span>Link strain to sleep need.</span></div>
+          <div><strong>03</strong><span>Improve bedtime habits.</span></div>
         </div>
       </div>
-      <div class="aura-card-content">
-        <div class="home-color-swatch" style="background:#1B2A4A"></div>
-        <div class="aura-card-mode">Mansion</div>
-        <h3>Midnight Navy</h3>
-        <p>Cool, elevated, and architectural, with a luxury-night feel that makes the blue finish read more exclusive.</p>
-        <span>Choose Navy</span>
-      </div>
-    </a>
-    <a class="home-color-card aura-card zoom-card aura-forest" href="product.html?color=forest-green" data-fit-launch="forest-green" data-zoom-image="assets/forest-green.png">
-      <div class="aura-card-bg">
-        <img src="assets/hiking_watch.png" alt="Hiking setting for the Forest Green Wellec watch"/>
-      </div>
-      <button class="zoom-toggle" type="button" aria-pressed="false">Enable zoom</button>
-      <div class="zoom-pane" aria-hidden="true"></div>
-      <div class="aura-card-sheen" aria-hidden="true"></div>
-      <div class="aura-card-watch">
-        <img src="assets/forest-green.png" alt="Forest Green Wellec watch"/>
-      </div>
-      <div class="aura-card-content">
-        <div class="home-color-swatch" style="background:#1A3D2B"></div>
-        <div class="aura-card-mode">Forest</div>
-        <h3>Forest Green</h3>
-        <p>Grounded, calm, and wellness-led, with the most natural fit for movement, breath, and recovery.</p>
-        <span>Choose Green</span>
-      </div>
-    </a>
-    <a class="home-color-card aura-card zoom-card aura-marathon" href="product.html?color=crimson-red" data-fit-launch="crimson-red" data-zoom-image="assets/orange.jpeg">
-      <div class="aura-card-bg">
-        <img src="assets/marathon_watch.png" alt="Marathon setting for the orange Wellec watch"/>
-      </div>
-      <button class="zoom-toggle" type="button" aria-pressed="false">Enable zoom</button>
-      <div class="zoom-pane" aria-hidden="true"></div>
-      <div class="aura-card-sheen" aria-hidden="true"></div>
-      <div class="aura-card-watch">
-        <img src="assets/orange.jpeg" alt="Wellec watch with original orange band on wrist"/>
-      </div>
-      <div class="aura-card-content">
-        <div class="home-color-swatch" style="background:#7A1515"></div>
-        <div class="aura-card-mode">Marathon</div>
-        <h3>Original Orange</h3>
-        <p>Fast, visible, and energetic, made to feel like momentum, endurance, and forward movement.</p>
-        <span>Choose Orange</span>
-      </div>
-    </a>
-  </div>
-</section>
-
-<section class="section reviews-section" id="reviews">
-  <div class="reviews-intro">
-    <div class="section-label">People Feedback</div>
-    <h2 class="section-title">Users talk about it like a watch that fits a lifestyle, not just a feature list.</h2>
-    <p class="section-sub">
-      The strongest products make people feel seen. Reviews below reinforce the tone of each color story: disciplined, elevated,
-      grounded, or energetic.
-    </p>
-  </div>
-  <div class="reviews-shell">
-    <div class="reviews-summary">
-      <div class="reviews-score">4.9</div>
-      <div class="reviews-stars">в…в…в…в…в…</div>
-      <p>Based on 2,800+ style and fit reviews from early Wellec concept users.</p>
-      <button class="btn-primary review-open-btn" type="button" id="open-review-modal" onclick="document.getElementById('review-modal')?.classList.add('is-open'); document.getElementById('review-modal')?.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';">Leave A Review</button>
-    </div>
-    <div class="reviews-grid" id="reviews-grid">
-      <article class="review-card">
-        <span class="review-tag">Classic Black</span>
-        <p>вЂњThis is the one that looks right in a meeting and still feels premium at dinner. It doesnвЂ™t try too hard.вЂќ</p>
-        <strong>Levan, consultant</strong>
-      </article>
-      <article class="review-card">
-        <span class="review-tag">Forest Green</span>
-        <p>вЂњGreen feels calmer and more wellness-focused. It looks like recovery, nature, and daily rhythm all in one object.вЂќ</p>
-        <strong>Nina, yoga coach</strong>
-      </article>
-      <article class="review-card">
-        <span class="review-tag">Original Orange</span>
-        <p>вЂњOrange instantly reads as movement. It has that visible, athletic push that makes you want to do something.вЂќ</p>
-        <strong>Giorgi, marathon runner</strong>
-      </article>
-    </div>
-  </div>
-</section>
-
-<div class="review-modal" id="review-modal" aria-hidden="true">
-  <div class="review-modal-backdrop" data-review-close onclick="document.getElementById('review-modal')?.classList.remove('is-open'); document.getElementById('review-modal')?.setAttribute('aria-hidden','true'); document.body.style.overflow='';"></div>
-  <div class="review-compose-window review-modal-dialog">
-    <button class="review-modal-close" type="button" aria-label="Close review window" data-review-close onclick="document.getElementById('review-modal')?.classList.remove('is-open'); document.getElementById('review-modal')?.setAttribute('aria-hidden','true'); document.body.style.overflow='';">x</button>
-    <div class="review-compose-head">
-      <span class="review-compose-kicker">Leave A Review</span>
-      <h3>Rate the Wellec site experience.</h3>
-    </div>
-    <form class="review-form" id="site-review-form">
-      <label class="review-field">
-        <span>Your name</span>
-        <input type="text" id="review-name" name="name" placeholder="Alex" maxlength="32" required>
-      </label>
-      <label class="review-field">
-        <span>Your rating</span>
-        <div class="review-stars-input" id="review-stars-input" role="radiogroup" aria-label="Site rating">
-          <button type="button" class="review-star-button" data-rating="1" aria-label="Rate 1 star">в…</button>
-          <button type="button" class="review-star-button" data-rating="2" aria-label="Rate 2 stars">в…</button>
-          <button type="button" class="review-star-button" data-rating="3" aria-label="Rate 3 stars">в…</button>
-          <button type="button" class="review-star-button" data-rating="4" aria-label="Rate 4 stars">в…</button>
-          <button type="button" class="review-star-button" data-rating="5" aria-label="Rate 5 stars">в…</button>
+    </article>
+    <article class="whoop-insight-panel" data-insight-panel="strain">
+      <figure class="whoop-insight-media">
+        <img src="assets/marathon_watch.png" alt="Wellex watch in a high-performance strain context">
+      </figure>
+      <div class="whoop-insight-copy">
+        <span>Strain</span>
+        <h3>Understand daily load.</h3>
+        <p>Read intensity, output, and total load.</p>
+        <div class="whoop-insight-points">
+          <div><strong>01</strong><span>Measure work and training load.</span></div>
+          <div><strong>02</strong><span>See when effort is too high.</span></div>
+          <div><strong>03</strong><span>Plan tomorrow from today.</span></div>
         </div>
-        <input type="hidden" id="review-rating" name="rating" value="5">
-      </label>
-      <label class="review-field">
-        <span>What do you use the watch for?</span>
-        <select id="review-use-case" name="use_case" required>
-          <option value="Marathon runner">Marathon runner</option>
-          <option value="Personal use">Personal use</option>
-          <option value="Health tracking">Health tracking</option>
-          <option value="Health problem support">Health problem support</option>
-          <option value="Business and daily wear">Business and daily wear</option>
-          <option value="Gym and training">Gym and training</option>
-          <option value="Other">Other</option>
-        </select>
-      </label>
-      <label class="review-field hidden" id="review-use-case-other-field">
-        <span>Tell us your use</span>
-        <input type="text" id="review-use-case-other" name="use_case_other" placeholder="Write your own use case" maxlength="50">
-      </label>
-      <label class="review-field">
-        <span>Your review</span>
-        <textarea id="review-message" name="message" rows="4" maxlength="220" placeholder="What felt strong, memorable, or worth improving?" required></textarea>
-      </label>
-      <button class="btn-primary review-submit-btn" type="submit">Submit Review</button>
-    </form>
-  </div>
-</div>
-
-<section class="section architecture-strip">
-  <div class="architecture-intro">
-    <div class="section-label">Architectural Separation</div>
-    <h2 class="section-title">App and web have different jobs.</h2>
-  </div>
-  <div class="architecture-grid">
-    <article class="architecture-card app-card">
-      <span class="eyebrow">APP</span>
-      <h3>Wellness and community</h3>
-      <ul>
-        <li>WVI tracking and wellness widgets</li>
-        <li>AI coach and habit guidance</li>
-        <li>Social and community touchpoints</li>
-      </ul>
-    </article>
-    <article class="architecture-card web-card">
-      <span class="eyebrow">WEB</span>
-      <h3>Finance and partner operations</h3>
-      <ul>
-        <li>Wallet, deposit, withdrawal, claims</li>
-        <li>WellecVault staking and yield analytics</li>
-        <li>MLM tree, AI agents, admin controls</li>
-      </ul>
-    </article>
-  </div>
-</section>
-
-<section class="section module-showcase" id="wallet">
-  <div class="section-label">Core Modules</div>
-  <h2 class="section-title">A dashboard built around live operating blocks.</h2>
-  <div class="module-grid">
-    <article class="module-card featured">
-      <span class="eyebrow">Wallet</span>
-      <h3>Multi-chain balance with on-ramp and off-ramp controls</h3>
-      <p>Unified portfolio view across EVM, Tron, and Solana with exports, claims, private key control, and one-click top-up to WellecVault.</p>
-      <div class="chain-grid">
-        <div>Ethereum <strong>$4,200</strong></div>
-        <div>Polygon <strong>$3,100</strong></div>
-        <div>BSC <strong>$1,800</strong></div>
-        <div>Solana <strong>$450</strong></div>
       </div>
     </article>
-    <article class="module-card">
-      <span class="eyebrow">Staking</span>
-      <h3>Single-vault logic</h3>
-      <p>One WellecVault for all users. Yield scales with WVI, lock-up depends on deposit amount, and strategy execution remains AI-managed.</p>
+    <article class="whoop-insight-panel" data-insight-panel="recovery">
+      <figure class="whoop-insight-media">
+        <img src="assets/hiking_watch.png" alt="Wellex watch in a recovery context">
+      </figure>
+      <div class="whoop-insight-copy">
+        <span>Recovery</span>
+        <h3>Know when you are ready again.</h3>
+        <p>Recovery helps time effort and rest.</p>
+        <div class="whoop-insight-points">
+          <div><strong>01</strong><span>Measure readiness after stress.</span></div>
+          <div><strong>02</strong><span>Know when to push or reset.</span></div>
+          <div><strong>03</strong><span>Make recovery visible.</span></div>
+        </div>
+      </div>
     </article>
-    <article class="module-card" id="network">
-      <span class="eyebrow">Partner Network</span>
-      <h3>Interactive team intelligence</h3>
-      <p>KPI cards, referral funnel, rank progress, partner profile popups, and a tree that exposes WVI, status, and live activity.</p>
+    <article class="whoop-insight-panel" data-insight-panel="stress">
+      <figure class="whoop-insight-media">
+        <img src="assets/businessman_black.png" alt="Wellex watch in a workday stress context">
+      </figure>
+      <div class="whoop-insight-copy">
+        <span>Stress</span>
+        <h3>Read pressure early.</h3>
+        <p>See how mental load affects the body.</p>
+        <div class="whoop-insight-points">
+          <div><strong>01</strong><span>Spot pressure patterns.</span></div>
+          <div><strong>02</strong><span>Link stress to recovery.</span></div>
+          <div><strong>03</strong><span>Adjust before overload.</span></div>
+        </div>
+      </div>
     </article>
-    <article class="module-card" id="ai">
-      <span class="eyebrow">AI Agents</span>
-      <h3>Execution support, not decorative chat</h3>
-      <p>Income briefings, simulations, activation campaigns, and crisis-mode plans turn the dashboard into an operating system for growth.</p>
+    <article class="whoop-insight-panel" data-insight-panel="behaviors">
+      <figure class="whoop-insight-media">
+        <img src="assets/lecturer_watch.png" alt="Wellex watch in a daily routine behavior context">
+      </figure>
+      <div class="whoop-insight-copy">
+        <span>Behaviors</span>
+        <h3>Make habits visible.</h3>
+        <p>Connect routines to real outcomes.</p>
+        <div class="whoop-insight-points">
+          <div><strong>01</strong><span>Reveal key routines.</span></div>
+          <div><strong>02</strong><span>See what helps or hurts.</span></div>
+          <div><strong>03</strong><span>Build consistency.</span></div>
+        </div>
+      </div>
     </article>
-  </div>
-</section>
-
-<section class="section desirability-strip">
-  <div class="desirability-copy">
-    <div class="section-label">Product Appeal</div>
-    <h2 class="section-title">The dashboard sells the outcome. The watch sells the desire.</h2>
-    <p class="section-sub">
-      Wellec needs both sides on the page: a credible financial operating layer and a physical product that looks premium,
-      wearable, and distinctive. These visuals give the concept more pull without breaking the dashboard direction.
-    </p>
-  </div>
-  <div class="desirability-gallery">
-    <figure class="desirability-shot large">
-      <img src="assets/forest-green.png" alt="Lifestyle photo of Wellec watch with forest green band"/>
-    </figure>
-    <figure class="desirability-shot">
-      <img src="assets/classic-black.png" alt="Lifestyle photo of Wellec watch with classic black band"/>
-    </figure>
-  </div>
-</section>
-
-<section class="section operations-band">
-  <div class="operations-copy">
-    <div class="section-label">Wallet Journey</div>
-    <h2 class="section-title">From card or crypto to managed vault allocation.</h2>
-    <p class="section-sub">
-      Documentation-defined behavior is reflected directly in the interface: card deposits convert into USDC,
-      off-ramp sends payouts back to local methods, and vault actions stay visible with claim and reinvest rules.
-    </p>
-  </div>
-  <div class="operations-panels">
-    <article class="ops-card">
-      <span class="eyebrow">On-Ramp</span>
-      <h3>Top up</h3>
-      <p>Amount: $500 USD</p>
-      <p>Method: Bank Card</p>
-      <p>You receive: 487.50 USDC</p>
-    </article>
-    <article class="ops-card">
-      <span class="eyebrow">Off-Ramp</span>
-      <h3>Withdraw to card</h3>
-      <p>Amount: 200 USDC</p>
-      <p>Fee: ~3%</p>
-      <p>Payout: 194 USD</p>
-    </article>
-    <article class="ops-card">
-      <span class="eyebrow">Policy</span>
-      <h3>Claim and reinvest rules</h3>
-      <p>2 free claims per month.</p>
-      <p>From the 3rd claim: 10% fee.</p>
-      <p>Reinvest min $100, max once per month.</p>
+    <article class="whoop-insight-panel" data-insight-panel="health">
+      <figure class="whoop-insight-media">
+        <img src="assets/wellex-glass.png" alt="Wellex connected health and cycle insight view">
+      </figure>
+      <div class="whoop-insight-copy">
+        <span>Health</span>
+        <h3>See one health story.</h3>
+        <p>Bring separate signals into one direction.</p>
+        <div class="whoop-insight-points">
+          <div><strong>01</strong><span>Combine key daily metrics.</span></div>
+          <div><strong>02</strong><span>Link behavior to outcomes.</span></div>
+          <div><strong>03</strong><span>Support long-term decisions.</span></div>
+        </div>
+      </div>
     </article>
   </div>
 </section>
 
-<section class="section intelligence-grid">
-  <article class="intelligence-card">
-    <div class="section-label">Ecosystem Hub</div>
-    <h2 class="section-title">Three questions answered fast.</h2>
-    <p class="section-sub">How much am I earning, what is blocking growth, and what should I do next. That framing comes directly from the partner ecosystem documentation.</p>
-  </article>
-  <article class="intelligence-card leaderboard-card">
-    <span class="eyebrow">Leaderboard</span>
-    <div class="leaderboard-row"><span>Income</span><strong>#08</strong></div>
-    <div class="leaderboard-row"><span>Network Growth</span><strong>+12%</strong></div>
-    <div class="leaderboard-row"><span>Webinar Audience</span><strong>47 registered</strong></div>
-  </article>
-  <article class="intelligence-card briefing-card">
-    <span class="eyebrow">08:00 Briefing</span>
-    <p>Yesterday: PV +$2,340 / New: 2 / Active: 23 / 31</p>
-    <p>Priority 1: revive a partner inactive for 22 days.</p>
-    <p>Priority 2: push $8,200 PV toward Director rank.</p>
-  </article>
-</section>
-
-<section class="section trust-section" id="trust">
-  <div class="trust-copy">
-    <div class="section-label">Trust Moment UX</div>
-    <h2 class="section-title">When WVI drops, the interface becomes prescriptive.</h2>
-    <p class="section-sub">
-      The documentation requires a six-step intervention when the rate falls below threshold after the grace period.
-      This section visualizes that "trust moment" instead of hiding it behind generic dashboards.
-    </p>
-  </div>
-  <div class="trust-steps">
-    <div class="trust-step"><span>01</span><p>Show exact WVI and current rate.</p></div>
-    <div class="trust-step"><span>02</span><p>Explain why the rate is at this level.</p></div>
-    <div class="trust-step"><span>03</span><p>Highlight what to improve: sleep, activity, stress.</p></div>
-    <div class="trust-step"><span>04</span><p>Map a realistic path to the next tier.</p></div>
-    <div class="trust-step"><span>05</span><p>Launch the AI assistant with a plan.</p></div>
-    <div class="trust-step"><span>06</span><p>Expose the progress bar to the next yield level.</p></div>
-  </div>
-</section>
-
-<section class="section closing-banner">
-  <div class="closing-shell">
+<section class="section whoop-cta-section" id="join">
+  <div class="whoop-cta-shell">
     <div>
-      <span class="eyebrow">Documentation-Aligned Concept</span>
-      <h2>Wellec web platform for participation management, partner network, AI agents, and analytics.</h2>
+      <div class="section-label">Join Wellex</div>
+      <h2>See your body more clearly.</h2>
+      <p>Wear daily. Recover smarter.</p>
     </div>
-    <a href="#overview" class="btn-primary">Back to Top</a>
+    <div class="whoop-cta-actions">
+      <a href="product.html?color=classic-black" class="btn-primary" data-fit-launch="classic-black">Choose Your Watch</a>
+      <a href="how-it-works.html" class="btn-outline">See Product Flow</a>
+    </div>
   </div>
 </section>
 
-<div class="fit-finder-modal" id="fit-finder-modal" aria-hidden="true">
-  <div class="fit-finder-backdrop" data-fit-close></div>
-  <div class="fit-finder-dialog">
-    <button class="fit-finder-close" type="button" aria-label="Close fit finder" data-fit-close>Г—</button>
-    <div class="fit-finder-hero">
-      <div class="fit-kicker">5-Second Fit Finder</div>
-      <h2 id="fit-title">Pick your energy. WeвЂ™ll match your watch.</h2>
-      <p id="fit-subtitle">
-        Four quick picks. No boring form. Just enough personality data to tell you which Wellec color actually feels like you.
-      </p>
-      <div class="fit-meta-row">
-        <div class="fit-chip" id="fit-target-chip">Focus: Open match</div>
-        <div class="fit-chip">4 quick rounds</div>
-        <div class="fit-chip">Instant result</div>
-      </div>
-      <button class="fit-skip-btn" type="button" id="fit-skip-btn" aria-label="Skip questions and show colors"><span class="fit-skip-btn-label">Skip</span></button>
-      <div class="fit-progress">
-        <span class="fit-progress-bar" id="fit-progress-bar"></span>
-      </div>
-    </div>
-
-    <div class="fit-question-stage" id="fit-question-stage">
-      <div class="fit-question-step" id="fit-question-step">Round 1 / 4</div>
-      <h3 class="fit-question-title" id="fit-question-title"></h3>
-      <div class="fit-options" id="fit-options"></div>
-    </div>
-
-    <div class="fit-result hidden" id="fit-result">
-      <div class="fit-result-glow" id="fit-result-glow"></div>
-      <div class="fit-result-label">Your Match</div>
-      <h3 class="fit-result-title" id="fit-result-title"></h3>
-      <p class="fit-result-copy" id="fit-result-copy"></p>
-      <div class="fit-result-reason" id="fit-result-reason"></div>
-      <div class="fit-result-actions">
-        <a class="btn-primary" id="fit-result-link" href="product.html?color=classic-black">See My Watch</a>
-        <button class="btn-outline" type="button" id="fit-restart-btn">Try Again</button>
-      </div>
-    </div>
-  </div>
-</div>
+<footer data-shared-footer></footer>
 
 <script src="js/main.js"></script>
 </body>
 </html>
+

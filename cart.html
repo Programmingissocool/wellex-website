@@ -3,24 +3,15 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cart вЂ“ Wellec</title>
+  <title>Cart - Wellex</title>
   <link rel="stylesheet" href="css/style.css"/>
 </head>
-<body>
+<body class="dashboard-home whoop-home topic-page">
+<div class="page-photo-backdrop" aria-hidden="true">
+  <img src="assets/wellex_front_back.jpg" alt="">
+</div>
 
-<nav>
-  <a class="nav-logo" href="index.html">wellec</a>
-  <div class="nav-links">
-    <a href="shop.html">Shop</a>
-    <a href="features.html">Features</a>
-    <a href="about.html">About</a>
-    <a href="#">Blog</a>
-    <a href="cart.html" class="nav-cart-icon active" style="font-size:1.2rem;">рџ›’
-      <span class="cart-badge" style="display:none">0</span>
-    </a>
-    <a href="#" class="nav-account">Account</a>
-  </div>
-</nav>
+<header data-shared-header data-active-page="colors"></header>
 
 <div class="cart-page">
   <div class="cart-inner">
@@ -40,7 +31,7 @@
       </div>
       <div class="summary-row">
         <span>Shipping</span>
-        <span class="summary-shipping" style="color:var(--green)">FREE</span>
+            <span class="summary-shipping" style="color:#ffffff">FREE</span>
       </div>
       <div class="summary-row">
         <span>Tax (estimated)</span>
@@ -51,73 +42,71 @@
         <span class="summary-total-val">$0.00</span>
       </div>
 
-      <!-- Promo Code -->
       <div class="promo-input">
         <input type="text" placeholder="Promo code"/>
         <button onclick="showToast('Invalid promo code')">Apply</button>
       </div>
 
       <a href="checkout.html">
-        <button class="cart-summary-btn">Proceed to Checkout в†’</button>
+        <button class="cart-summary-btn">Proceed to Checkout -></button>
       </a>
 
       <div style="text-align:center;margin-top:16px">
         <div style="display:flex;justify-content:center;gap:16px;font-size:1.4rem;margin-bottom:8px">
-          рџ’і рџ”’ рџ“¦
+          PAY LOCK BOX
         </div>
-        <div style="font-size:0.75rem;color:var(--gray)">Secure checkout В· Free returns В· 2-year warranty</div>
+        <div style="font-size:0.75rem;color:var(--gray)">Secure checkout - Free returns - 2-year warranty</div>
       </div>
     </div>
   </div>
 
-  <!-- CONTINUE SHOPPING -->
   <div class="cart-recommendations-wrap">
     <div class="cart-recommendations">
       <div class="cart-recommendations-head">
         <h3>Explore more finishes</h3>
-        <p>These are the same watch visuals used in the Colors section, so shoppers see the real product instead of placeholder graphics.</p>
+        <p>Compare the real product colors.</p>
       </div>
       <div class="cart-recommendations-grid">
         <article class="cart-recommendation-card">
           <a href="product.html?color=classic-black" class="cart-recommendation-media">
-            <img src="assets/classic-black.png" alt="Classic Black Wellec watch"/>
+            <img src="assets/businessman_black.png" alt="Classic Black Wellex watch in a business setting"/>
           </a>
           <div class="cart-recommendation-body">
             <div class="cart-recommendation-name">Classic Black</div>
-            <p>The most minimal finish. Quiet, sharp, and easy to wear with anything.</p>
+            <p>Quiet, sharp, and easy to wear.</p>
             <button class="cart-recommendation-btn" onclick="addToCart('classic-black','subscription')">Add to Cart</button>
           </div>
         </article>
 
         <article class="cart-recommendation-card">
           <a href="product.html?color=midnight-navy" class="cart-recommendation-media">
-            <img src="assets/navy.png" alt="Midnight Navy Wellec watch"/>
+            <img src="assets/lecturer_watch.png" alt="Midnight Navy Wellex watch in a lecture setting"/>
           </a>
           <div class="cart-recommendation-body">
             <div class="cart-recommendation-name">Midnight Navy</div>
-            <p>A cooler technical look with a darker premium tone than standard black.</p>
+            <p>A cooler, darker technical tone.</p>
             <button class="cart-recommendation-btn" onclick="addToCart('midnight-navy','subscription')">Add to Cart</button>
           </div>
         </article>
 
         <article class="cart-recommendation-card">
           <a href="product.html?color=forest-green" class="cart-recommendation-media">
-            <img src="assets/forest-green.png" alt="Forest Green Wellec watch"/>
+            <img src="assets/hiking_watch.png" alt="Forest Green Wellex watch in a hiking setting"/>
           </a>
           <div class="cart-recommendation-body">
-            <div class="cart-recommendation-name">Forest Green</div>
-            <p>A softer, grounded colorway that still reads premium and distinctive.</p>
+            <div class="cart-recommendation-name">Forest Finish</div>
+            <p>A grounded finish with a premium feel.</p>
             <button class="cart-recommendation-btn" onclick="addToCart('forest-green','subscription')">Add to Cart</button>
           </div>
         </article>
 
         <article class="cart-recommendation-card">
           <a href="product.html?color=crimson-red" class="cart-recommendation-media">
-            <img src="assets/orange.jpeg" alt="Wellec watch with original orange band"/>
+            <img src="assets/marathon_watch.png" alt="Crimson Red Wellex watch in a marathon setting"/>
           </a>
           <div class="cart-recommendation-body">
             <div class="cart-recommendation-name">Crimson Red</div>
-            <p>The boldest option, with the strongest lifestyle-photo presence on the site.</p>
+            <p>The boldest finish in the lineup.</p>
             <button class="cart-recommendation-btn" onclick="addToCart('crimson-red','subscription')">Add to Cart</button>
           </div>
         </article>
@@ -126,43 +115,9 @@
   </div>
 </div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div>
-        <div class="footer-brand-logo">wellec</div>
-        <p class="footer-brand-text">Premium health & fitness tracking for athletes who demand more.</p>
-      </div>
-      <div>
-        <div class="footer-col-title">Product</div>
-        <div class="footer-col-links">
-          <a href="shop.html">Shop</a>
-          <a href="features.html">Features</a>
-        </div>
-      </div>
-      <div>
-        <div class="footer-col-title">Company</div>
-        <div class="footer-col-links">
-          <a href="about.html">About</a>
-          <a href="#">Blog</a>
-        </div>
-      </div>
-      <div>
-        <div class="footer-col-title">Support</div>
-        <div class="footer-col-links">
-          <a href="#">Help</a>
-          <a href="#">Contact</a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>В© 2026 Wellec. All rights reserved.</span>
-      <span>Privacy В· Terms</span>
-    </div>
-  </div>
-</footer>
+<footer data-shared-footer></footer>
 
 <script src="js/main.js"></script>
 </body>
 </html>
+

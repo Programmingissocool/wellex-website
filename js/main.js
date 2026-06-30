@@ -1,16 +1,577 @@
-// в”Ђв”Ђв”Ђ WELLEX WEBSITE JAVASCRIPT v2.0 в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
+// ─── WELLEX WEBSITE JAVASCRIPT v2.0 ────────────────────────────
 
 // Cart state
 let cart = JSON.parse(localStorage.getItem('wellec-cart')) || [];
+const selectionStorageKey = 'wellex-current-selection';
+const languageStorageKey = 'wellex-site-language';
+const translationCacheStorageKey = 'wellex-translation-cache-v1';
+const supportedLanguages = ['en', 'es', 'ru'];
+const languageNames = { en: 'EN', es: 'ES', ru: 'RU' };
+const uiCopy = {
+  en: {
+    overview: 'Overview',
+    foundation: 'Foundation',
+    app: 'App',
+    market: 'Market',
+    colors: 'Colors',
+    social: 'Social',
+    cart: 'Cart',
+    openCart: 'Open cart',
+    getWellex: 'Get Wellex',
+    openMenu: 'Open menu',
+    closeMenu: 'Close menu',
+    wellexHome: 'Wellex home',
+    oneTime: 'One-Time',
+    subscription: 'Subscription',
+    noWatchSelected: 'No watch selected',
+    currentSelection: 'Current selection',
+    pickColorPreview: 'Pick a color to see your watch here.',
+    inCart: 'In cart',
+    viewCart: 'View cart',
+    emptyCart: 'Your cart is still empty.',
+    languageSwitcher: 'Language switcher'
+  },
+  es: {
+    overview: 'Resumen',
+    foundation: 'Fundacion',
+    app: 'Aplicacion',
+    market: 'Mercado',
+    colors: 'Colores',
+    social: 'Social',
+    cart: 'Carrito',
+    openCart: 'Abrir carrito',
+    getWellex: 'Comprar Wellex',
+    openMenu: 'Abrir menu',
+    closeMenu: 'Cerrar menu',
+    wellexHome: 'Inicio de Wellex',
+    oneTime: 'Pago unico',
+    subscription: 'Suscripcion',
+    noWatchSelected: 'No hay reloj seleccionado',
+    currentSelection: 'Seleccion actual',
+    pickColorPreview: 'Elige un color para ver tu reloj aqui.',
+    inCart: 'En el carrito',
+    viewCart: 'Ver carrito',
+    emptyCart: 'Tu carrito sigue vacio.',
+    languageSwitcher: 'Selector de idioma'
+  },
+  ru: {
+    overview: 'Obzor',
+    foundation: 'Osnova',
+    app: 'Prilozhenie',
+    market: 'Market',
+    colors: 'Tsveta',
+    social: 'Sotsial',
+    cart: 'Korzina',
+    openCart: 'Otkryt korzinu',
+    getWellex: 'Kupit Wellex',
+    openMenu: 'Otkryt menu',
+    closeMenu: 'Zakryt menu',
+    wellexHome: 'Glavnaya Wellex',
+    oneTime: 'Razovaya pokupka',
+    subscription: 'Podpiska',
+    noWatchSelected: 'Chasy ne vybrany',
+    currentSelection: 'Tekushchiy vybor',
+    pickColorPreview: 'Vyberite tsvet, chtoby uvidet svoi chasy.',
+    inCart: 'V korzine',
+    viewCart: 'Otkryt korzinu',
+    emptyCart: 'Vasha korzina poka pusta.',
+    languageSwitcher: 'Pereklyuchatel yazyka'
+  }
+};
+const originalTextNodes = new WeakMap();
+const originalAttributeValues = new WeakMap();
+let translationObserver = null;
+let translationDebounceTimer = null;
+let isApplyingLanguage = false;
+
+function getCurrentLanguage() {
+  const saved = localStorage.getItem(languageStorageKey);
+  return supportedLanguages.includes(saved) ? saved : 'en';
+}
+
+function getUiCopy(key, lang = getCurrentLanguage()) {
+  return uiCopy[lang]?.[key] || uiCopy.en[key] || '';
+}
+
+function setCurrentLanguage(lang) {
+  const nextLang = supportedLanguages.includes(lang) ? lang : 'en';
+  localStorage.setItem(languageStorageKey, nextLang);
+  document.documentElement.lang = nextLang;
+  return nextLang;
+}
+
+function getTranslationCache() {
+  try {
+    return JSON.parse(localStorage.getItem(translationCacheStorageKey) || '{}');
+  } catch (error) {
+    return {};
+  }
+}
+
+function setTranslationCache(cache) {
+  try {
+    localStorage.setItem(translationCacheStorageKey, JSON.stringify(cache));
+  } catch (error) {
+    // Ignore cache persistence failures.
+  }
+}
+
+function getLocalizedSelectionLabel(selection, selectionProduct, lang = getCurrentLanguage()) {
+  if (!selectionProduct) return getUiCopy('noWatchSelected', lang);
+  return `${selectionProduct.name}${selection.plan === 'one-time' ? ` · ${getUiCopy('oneTime', lang)}` : ` · ${getUiCopy('subscription', lang)}`}`;
+}
+
+function createLanguageSwitcherMarkup(currentLanguage) {
+  const buttons = supportedLanguages.map((lang) => `
+    <button
+      class="nav-language-button${lang === currentLanguage ? ' is-active' : ''}"
+      type="button"
+      data-language-option="${lang}"
+      data-no-translate
+      aria-pressed="${lang === currentLanguage ? 'true' : 'false'}"
+      aria-label="${languageNames[lang]}"
+    >${languageNames[lang]}</button>
+  `).join('');
+
+  return `
+    <div class="nav-language-switcher" data-no-translate aria-label="${getUiCopy('languageSwitcher', currentLanguage)}">
+      ${buttons}
+    </div>
+  `;
+}
+
+function shouldTranslateText(text) {
+  const value = (text || '').trim();
+  if (!value) return false;
+  if (!/[A-Za-z]/.test(value)) return false;
+  if (/^(https?:\/\/|www\.|#|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/i.test(value)) return false;
+  if (/^[\d\s.,/%:+-]+$/.test(value)) return false;
+  return true;
+}
+
+function collectTranslatableItems(root = document.body) {
+  const items = [];
+  if (!root) return items;
+
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.parentElement) return NodeFilter.FILTER_REJECT;
+      const parent = node.parentElement;
+      if (parent.closest('[data-no-translate]')) return NodeFilter.FILTER_REJECT;
+      if (parent.closest('script, style, noscript, svg, canvas')) return NodeFilter.FILTER_REJECT;
+      const source = originalTextNodes.get(node) || node.textContent;
+      if (!shouldTranslateText(source)) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+
+  while (walker.nextNode()) {
+    const node = walker.currentNode;
+    if (!originalTextNodes.has(node)) originalTextNodes.set(node, node.textContent);
+    items.push({ type: 'text', node, source: originalTextNodes.get(node) });
+  }
+
+  const elements = root.matches?.('*') ? [root, ...root.querySelectorAll('*')] : [...root.querySelectorAll('*')];
+  elements.forEach((element) => {
+    if (element.closest('[data-no-translate]')) return;
+    ['placeholder', 'title', 'aria-label'].forEach((attribute) => {
+      const value = element.getAttribute(attribute);
+      if (!shouldTranslateText(value)) return;
+      const stored = originalAttributeValues.get(element) || {};
+      if (!stored[attribute]) {
+        stored[attribute] = value;
+        originalAttributeValues.set(element, stored);
+      }
+      items.push({ type: 'attribute', element, attribute, source: stored[attribute] });
+    });
+  });
+
+  return items;
+}
+
+function restoreOriginalLanguage() {
+  collectTranslatableItems(document.body).forEach((item) => {
+    if (item.type === 'text') item.node.textContent = item.source;
+    if (item.type === 'attribute') item.element.setAttribute(item.attribute, item.source);
+  });
+
+  if (!document.documentElement.dataset.originalTitle) {
+    document.documentElement.dataset.originalTitle = document.title;
+  }
+  document.title = document.documentElement.dataset.originalTitle;
+}
+
+async function fetchTranslatedBatch(strings, targetLanguage) {
+  const joined = strings.map((text, index) => `__WELLEX_SEGMENT_${index}__\n${text}`).join('\n');
+  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLanguage}&dt=t&q=${encodeURIComponent(joined)}`;
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`Translation request failed with ${response.status}`);
+  const data = await response.json();
+  const translatedText = Array.isArray(data?.[0]) ? data[0].map((part) => part[0]).join('') : joined;
+  const matches = [...translatedText.matchAll(/__WELLEX_SEGMENT_(\d+)__\s*/g)];
+  const parsed = {};
+
+  if (!matches.length) {
+    strings.forEach((value, index) => {
+      parsed[index] = value;
+    });
+    return parsed;
+  }
+
+  matches.forEach((match, index) => {
+    const segmentIndex = Number(match[1]);
+    const start = match.index + match[0].length;
+    const end = index + 1 < matches.length ? matches[index + 1].index : translatedText.length;
+    parsed[segmentIndex] = translatedText.slice(start, end).trim();
+  });
+
+  return parsed;
+}
+
+async function translateStrings(strings, targetLanguage) {
+  if (targetLanguage === 'en') {
+    return strings.reduce((results, value) => {
+      results[value] = value;
+      return results;
+    }, {});
+  }
+
+  const cache = getTranslationCache();
+  cache[targetLanguage] = cache[targetLanguage] || {};
+  const results = {};
+  const missing = [];
+
+  strings.forEach((value) => {
+    if (cache[targetLanguage][value]) results[value] = cache[targetLanguage][value];
+    else missing.push(value);
+  });
+
+  const batchSize = 12;
+  for (let index = 0; index < missing.length; index += batchSize) {
+    const batch = missing.slice(index, index + batchSize);
+    const translatedBatch = await fetchTranslatedBatch(batch, targetLanguage);
+    batch.forEach((source, batchIndex) => {
+      const translated = translatedBatch[batchIndex] || source;
+      cache[targetLanguage][source] = translated;
+      results[source] = translated;
+    });
+  }
+
+  setTranslationCache(cache);
+  return results;
+}
+
+async function applyLanguageToPage(lang = getCurrentLanguage()) {
+  const activeLanguage = setCurrentLanguage(lang);
+  if (!document.documentElement.dataset.originalTitle) {
+    document.documentElement.dataset.originalTitle = document.title;
+  }
+
+  if (activeLanguage === 'en') {
+    restoreOriginalLanguage();
+    return;
+  }
+
+  const items = collectTranslatableItems(document.body);
+  const uniqueSources = [...new Set(items.map((item) => item.source))];
+  if (!uniqueSources.length) return;
+
+  isApplyingLanguage = true;
+  try {
+    const translations = await translateStrings(uniqueSources, activeLanguage);
+    items.forEach((item) => {
+      const translated = translations[item.source] || item.source;
+      if (item.type === 'text') item.node.textContent = translated;
+      if (item.type === 'attribute') item.element.setAttribute(item.attribute, translated);
+    });
+
+    const titleTranslations = await translateStrings([document.documentElement.dataset.originalTitle], activeLanguage);
+    document.title = titleTranslations[document.documentElement.dataset.originalTitle] || document.documentElement.dataset.originalTitle;
+  } catch (error) {
+    console.error('Wellex translation failed:', error);
+  } finally {
+    isApplyingLanguage = false;
+  }
+}
+
+function scheduleLanguageRefresh() {
+  if (translationDebounceTimer) window.clearTimeout(translationDebounceTimer);
+  translationDebounceTimer = window.setTimeout(() => {
+    applyLanguageToPage(getCurrentLanguage());
+  }, 120);
+}
+
+function initLanguageObserver() {
+  if (translationObserver || !document.body) return;
+  translationObserver = new MutationObserver(() => {
+    if (isApplyingLanguage || getCurrentLanguage() === 'en') return;
+    scheduleLanguageRefresh();
+  });
+  translationObserver.observe(document.body, { childList: true, subtree: true, characterData: true });
+}
+
+function setLanguageButtonsState(language, isTranslating = false) {
+  document.querySelectorAll('[data-language-option]').forEach((button) => {
+    const isActive = button.dataset.languageOption === language;
+    button.classList.toggle('is-active', isActive);
+    button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    button.disabled = isTranslating;
+  });
+}
+
+async function changeSiteLanguage(nextLanguage) {
+  const language = setCurrentLanguage(nextLanguage);
+  renderSharedHeader();
+  updateCartBadge();
+  setLanguageButtonsState(language, true);
+  await applyLanguageToPage(language);
+  setLanguageButtonsState(language, false);
+}
 
 const products = {
-  'classic-black': { name: 'Classic Black', bandColor: '#0D0D0D', bandLight: false, price: 279, subPrice: 179 },
-  'midnight-navy': { name: 'Midnight Navy', bandColor: '#1B2A4A', bandLight: false, price: 279, subPrice: 179 },
-  'forest-green':  { name: 'Forest Green',  bandColor: '#1A3D2B', bandLight: false, price: 279, subPrice: 179 },
-  'crimson-red':   { name: 'Crimson Red',   bandColor: '#7A1515', bandLight: false, price: 279, subPrice: 179 },
+  'classic-black': { name: 'Classic Black', bandColor: '#0D0D0D', bandLight: false, price: 279, subPrice: 179, image: 'assets/classic-black.png' },
+  'midnight-navy': { name: 'Midnight Navy', bandColor: '#1B2A4A', bandLight: false, price: 279, subPrice: 179, image: 'assets/navy.png' },
+  'forest-green':  { name: 'Forest Green',  bandColor: '#1A3D2B', bandLight: false, price: 279, subPrice: 179, image: 'assets/forest-green.png' },
+  'crimson-red':   { name: 'Crimson Red',   bandColor: '#7A1515', bandLight: false, price: 279, subPrice: 179, image: 'assets/orange.jpeg' },
 };
 
-// в”Ђв”Ђв”Ђ WATCH SVG GENERATOR в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
+function renderSharedHeader() {
+  const mount = document.querySelector('[data-shared-header]');
+  if (!mount) return;
+
+  const activePage = mount.dataset.activePage || 'overview';
+  const currentLanguage = getCurrentLanguage();
+  const links = [
+    { id: 'overview', href: 'index.html', label: getUiCopy('overview', currentLanguage) },
+    { id: 'foundation', href: 'foundation.html', label: getUiCopy('foundation', currentLanguage) },
+    { id: 'app', href: 'app.html', label: getUiCopy('app', currentLanguage) },
+    { id: 'market', href: 'market.html', label: getUiCopy('market', currentLanguage) },
+    { id: 'colors', href: 'shop.html', label: getUiCopy('colors', currentLanguage) },
+    { id: 'social', href: 'social.html', label: getUiCopy('social', currentLanguage) },
+  ];
+
+  const navLinks = links.map((link) => {
+    const activeClass = link.id === activePage ? ' class="active"' : '';
+    return `<a href="${link.href}"${activeClass}>${link.label}</a>`;
+  }).join('');
+
+  const accountHref = 'index.html#join';
+  const accountMarkup = getUiCopy('getWellex', currentLanguage);
+  const accountClass = 'nav-account';
+  const selection = getCurrentSelection();
+  const selectionProduct = selection ? products[selection.id] : null;
+  const selectionLabel = selectionProduct
+    ? `${selectionProduct.name}${selection.plan === 'one-time' ? ' · One-Time' : ' · Subscription'}`
+    : 'No watch selected';
+  const localizedSelectionLabel = getLocalizedSelectionLabel(selection, selectionProduct, currentLanguage);
+  const previewMarkup = getHeaderCartPreviewMarkup(selection);
+  const languageSwitcher = createLanguageSwitcherMarkup(currentLanguage);
+
+  mount.innerHTML = `
+    <nav class="dashboard-nav">
+      <a class="nav-logo nav-logo-media" href="index.html" aria-label="${getUiCopy('wellexHome', currentLanguage)}">
+        <span class="nav-logo-mark" aria-hidden="true">
+          <img src="assets/wellex-logo-mark.svg" alt="">
+        </span>
+        <span class="nav-logo-word">WELLEX</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="${getUiCopy('openMenu', currentLanguage)}">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links" id="nav-menu">
+        ${navLinks}
+        <div class="nav-cart-wrap">
+          <a href="cart.html" class="nav-cart-link" aria-label="${getUiCopy('openCart', currentLanguage)}">
+            <span class="nav-cart-icon" aria-hidden="true">${getUiCopy('cart', currentLanguage)}</span>
+            <span class="nav-cart-copy">
+              <strong>${getUiCopy('cart', currentLanguage)}</strong>
+              <small class="nav-cart-selection">${localizedSelectionLabel}</small>
+            </span>
+            <span class="cart-badge" style="display:none">0</span>
+          </a>
+          <div class="nav-cart-preview">${previewMarkup}</div>
+        </div>
+        ${languageSwitcher}
+        <a href="${accountHref}" class="${accountClass}">🛒 ${accountMarkup}</a>
+      </div>
+    </nav>`;
+
+  const navCartIcon = mount.querySelector('.nav-cart-icon');
+  if (navCartIcon) {
+    navCartIcon.innerHTML = '&#128722;';
+  }
+
+  const navAccount = mount.querySelector('.nav-account');
+  if (navAccount) {
+    navAccount.textContent = accountMarkup;
+  }
+
+  const nav = mount.querySelector('.dashboard-nav');
+  const navToggle = mount.querySelector('.nav-toggle');
+  const navMenuLinks = [...mount.querySelectorAll('.nav-links a')];
+  const languageButtons = [...mount.querySelectorAll('[data-language-option]')];
+
+  if (nav && navToggle) {
+    const setMenuState = (isOpen) => {
+      nav.classList.toggle('is-open', isOpen);
+      navToggle.setAttribute('aria-expanded', String(isOpen));
+      navToggle.setAttribute('aria-label', isOpen ? getUiCopy('closeMenu', currentLanguage) : getUiCopy('openMenu', currentLanguage));
+      document.body.classList.toggle('nav-open', isOpen);
+    };
+
+    navToggle.addEventListener('click', () => {
+      setMenuState(!nav.classList.contains('is-open'));
+    });
+
+    navMenuLinks.forEach((link) => {
+      link.addEventListener('click', () => setMenuState(false));
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 980 && nav.classList.contains('is-open')) {
+        setMenuState(false);
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      if (window.innerWidth > 980 || !nav.classList.contains('is-open')) return;
+      if (nav.contains(event.target)) return;
+      setMenuState(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && nav.classList.contains('is-open')) {
+        setMenuState(false);
+      }
+    });
+  }
+
+  languageButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const nextLanguage = button.dataset.languageOption;
+      if (!supportedLanguages.includes(nextLanguage) || nextLanguage === getCurrentLanguage()) return;
+      changeSiteLanguage(nextLanguage);
+    });
+  });
+}
+
+function renderSharedFooter() {
+  const mount = document.querySelector('[data-shared-footer]');
+  if (!mount) return;
+
+  mount.innerHTML = `
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand-logo">wellex</div>
+          <p class="footer-brand-text">Wellex turns daily health data into clear action.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Support</div>
+          <div class="footer-col-links">
+            <a href="#">Member Support</a>
+            <a href="#">Order Status</a>
+            <a href="#">Rejoin Wellex</a>
+            <a href="#">Member Login</a>
+            <a href="#">Wellex Labs</a>
+            <a href="#">Wellex Community</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Company</div>
+          <div class="footer-col-links">
+            <a href="#">Support</a>
+            <a href="#">Developers</a>
+            <a href="#">Engineering</a>
+            <a href="#">Careers</a>
+            <a href="#">Our Mission</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Legal</div>
+          <div class="footer-col-links">
+            <a href="#">Terms of Use</a>
+            <a href="#">Terms of Sale</a>
+            <a href="#">Privacy</a>
+            <a href="#">Security</a>
+            <a href="#">Patent</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Partner</div>
+          <div class="footer-col-links">
+            <a href="#">Become an Affiliate</a>
+            <a href="#">Developers</a>
+            <a href="product.html?color=classic-black">Get Wellex</a>
+            <a href="#">Refer a Friend</a>
+            <a href="#">Gift Wellex</a>
+            <a href="#">Corporate Gifting</a>
+            <a href="shop.html">Accessories</a>
+            <a href="index.html#join">Hero Discounts</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">The Locker</div>
+          <div class="footer-col-links">
+            <a href="#">The Locker</a>
+            <a href="#">Press Center</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>Our mission is simple: clearer health, better daily choices.</span>
+        <span>© 2026 Wellex</span>
+      </div>
+    </div>`;
+}
+
+function renderSharedFitFinder() {
+  if (document.getElementById('fit-finder-modal')) return;
+
+  document.body.insertAdjacentHTML('beforeend', `
+    <div class="fit-finder-modal" id="fit-finder-modal" aria-hidden="true">
+      <div class="fit-finder-backdrop" data-fit-close></div>
+      <div class="fit-finder-dialog">
+        <button class="fit-finder-close" type="button" aria-label="Close fit finder" data-fit-close>x</button>
+        <div class="fit-finder-hero">
+          <div class="fit-kicker">5-Second Fit Finder</div>
+          <h2 id="fit-title">Pick your energy. We will match your watch.</h2>
+          <p id="fit-subtitle">
+            Four quick picks. No boring form. Just enough personality data to tell you which Wellex color actually feels like you.
+          </p>
+          <div class="fit-meta-row">
+            <div class="fit-chip" id="fit-target-chip">Focus: Open match</div>
+            <div class="fit-chip">4 quick rounds</div>
+            <div class="fit-chip">Instant result</div>
+          </div>
+          <button class="fit-skip-btn" type="button" id="fit-skip-btn" aria-label="Skip questions and show colors"><span class="fit-skip-btn-label">Skip</span></button>
+          <div class="fit-progress">
+            <span class="fit-progress-bar" id="fit-progress-bar"></span>
+          </div>
+        </div>
+        <div class="fit-question-stage" id="fit-question-stage">
+          <div class="fit-question-step" id="fit-question-step">Round 1 / 4</div>
+          <h3 class="fit-question-title" id="fit-question-title"></h3>
+          <div class="fit-options" id="fit-options"></div>
+        </div>
+        <div class="fit-result hidden" id="fit-result">
+          <div class="fit-result-glow" id="fit-result-glow"></div>
+          <div class="fit-result-label">Your Match</div>
+          <h3 class="fit-result-title" id="fit-result-title"></h3>
+          <p class="fit-result-copy" id="fit-result-copy"></p>
+          <div class="fit-result-reason" id="fit-result-reason"></div>
+          <div class="fit-result-actions">
+            <a class="btn-primary" id="fit-result-link" href="product.html?color=classic-black">See My Watch</a>
+            <button class="btn-outline" type="button" id="fit-restart-btn">Try Again</button>
+          </div>
+        </div>
+      </div>
+    </div>`);
+}
+
+// ─── WATCH SVG GENERATOR ────────────────────────────────────────
 function generateWatchSVG(bandColor, size = 'medium', isLight = false) {
   const sizes = {
     small:  { w: 80,  h: 190, vb: '0 0 140 320' },
@@ -108,10 +669,77 @@ function lightenColor(hex, amount) {
   return '#' + ((r << 16)|(g << 8)|b).toString(16).padStart(6,'0');
 }
 
-// в”Ђв”Ђв”Ђ CART FUNCTIONS в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
+function getCurrentSelection() {
+  try {
+    const raw = localStorage.getItem(selectionStorageKey);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || !products[parsed.id]) return null;
+    return {
+      id: parsed.id,
+      plan: parsed.plan === 'one-time' ? 'one-time' : 'subscription'
+    };
+  } catch (error) {
+    return null;
+  }
+}
+
+function setCurrentSelection(productId, planType = 'subscription') {
+  if (!products[productId]) return;
+  localStorage.setItem(selectionStorageKey, JSON.stringify({
+    id: productId,
+    plan: planType === 'one-time' ? 'one-time' : 'subscription'
+  }));
+  updateHeaderCartState();
+}
+
+function getHeaderCartPreviewMarkup(selection = getCurrentSelection()) {
+  const currentLanguage = getCurrentLanguage();
+  const selectedProduct = selection ? products[selection.id] : null;
+  const selectedLine = selectedProduct
+    ? `
+      <div class="nav-cart-preview-current">
+        <div class="nav-cart-preview-kicker">${getUiCopy('currentSelection', currentLanguage)}</div>
+        <div class="nav-cart-preview-item">
+          <img src="${selectedProduct.image}" alt="${selectedProduct.name} watch"/>
+          <div>
+            <strong>${selectedProduct.name}</strong>
+            <small>${selection.plan === 'one-time' ? `${getUiCopy('oneTime', currentLanguage)} · $${selectedProduct.price}` : `${getUiCopy('subscription', currentLanguage)} · $${selectedProduct.subPrice}/mo`}</small>
+          </div>
+        </div>
+      </div>`
+    : `
+      <div class="nav-cart-preview-empty">
+        ${getUiCopy('pickColorPreview', currentLanguage)}
+      </div>`;
+
+  const cartItems = cart.slice(0, 3).map((item) => `
+    <div class="nav-cart-preview-row">
+      <span>${item.name}</span>
+      <small>${item.qty}x</small>
+    </div>`).join('');
+
+  const cartSection = cart.length
+    ? `
+      <div class="nav-cart-preview-list">
+        <div class="nav-cart-preview-kicker">${getUiCopy('inCart', currentLanguage)}</div>
+        ${cartItems}
+        <a class="nav-cart-preview-link" href="cart.html">${getUiCopy('viewCart', currentLanguage)}</a>
+      </div>`
+    : `
+      <div class="nav-cart-preview-list nav-cart-preview-list-empty">
+        <div class="nav-cart-preview-kicker">${getUiCopy('inCart', currentLanguage)}</div>
+        <div class="nav-cart-preview-empty">${getUiCopy('emptyCart', currentLanguage)}</div>
+      </div>`;
+
+  return `${selectedLine}${cartSection}`;
+}
+
+// ─── CART FUNCTIONS ──────────────────────────────────────────────
 function addToCart(productId, planType = 'subscription', overridePrice = null, discountPercent = 0) {
   const product = products[productId];
   if (!product) return;
+  setCurrentSelection(productId, planType);
   const existing = cart.find(i => i.id === productId && i.plan === planType);
   if (existing) { existing.qty++; }
   else {
@@ -129,7 +757,7 @@ function addToCart(productId, planType = 'subscription', overridePrice = null, d
     });
   }
   saveCart(); updateCartBadge();
-  showToast(`${product.name} added to cart! рџЋ‰`);
+  showToast(`${product.name} added to cart! 🎉`);
 }
 
 function removeFromCart(index) {
@@ -151,9 +779,22 @@ function getCartCount() { return cart.reduce((sum,i) => sum + i.qty, 0); }
 function updateCartBadge() {
   const badge = document.querySelector('.cart-badge');
   if (badge) { const c = getCartCount(); badge.textContent = c; badge.style.display = c > 0 ? 'flex' : 'none'; }
+  updateHeaderCartState();
 }
 
-// в”Ђв”Ђв”Ђ RENDER CART PAGE в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
+function updateHeaderCartState() {
+  const selection = getCurrentSelection();
+  const selectionProduct = selection ? products[selection.id] : null;
+  const selectionEl = document.querySelector('.nav-cart-selection');
+  if (selectionEl) {
+    selectionEl.textContent = getLocalizedSelectionLabel(selection, selectionProduct);
+  }
+
+  const preview = document.querySelector('.nav-cart-preview');
+  if (preview) preview.innerHTML = getHeaderCartPreviewMarkup(selection);
+}
+
+// ─── RENDER CART PAGE ────────────────────────────────────────────
 function renderCart() {
   const itemsSection = document.querySelector('.cart-items-section');
   const summarySection = document.querySelector('.cart-summary');
@@ -161,20 +802,20 @@ function renderCart() {
 
   const itemsHTML = cart.length === 0
     ? `<div style="text-align:center;padding:60px 20px;color:var(--gray)">
-        <div style="font-size:3rem;margin-bottom:16px">рџ›ЌпёЏ</div>
+        <div style="font-size:3rem;margin-bottom:16px">🛍️</div>
         <p style="font-size:1rem;margin-bottom:24px">Your cart is empty</p>
         <a href="shop.html" class="btn-primary">Shop Now</a>
        </div>`
     : cart.map((item, i) => `
         <div class="cart-item">
-          <div class="cart-item-image">${generateWatchSVG(item.bandColor,'small',item.bandLight||false)}</div>
+          <div class="cart-item-image"><img src="${products[item.id]?.image || ''}" alt="${item.name} watch"/></div>
           <div>
-            <div class="cart-item-name">Wellec Band вЂ“ ${item.name}</div>
+            <div class="cart-item-name">Wellec Band – ${item.name}</div>
             <div class="cart-item-variant">${item.plan === 'subscription'
-              ? 'рџ“¦ Monthly Subscription вЂ” $19/mo В· Band included FREE'
-              : 'рџ”Ѓ One-Time Purchase вЂ” Band Only В· $249'}</div>
+              ? '📦 Monthly Subscription — $19/mo · Band included FREE'
+              : '🔁 One-Time Purchase — Band Only · $249'}</div>
             <div class="cart-quantity">
-              <button class="qty-btn" onclick="updateQty(${i},-1)">в€’</button>
+              <button class="qty-btn" onclick="updateQty(${i},-1)">−</button>
               <span class="qty-value">${item.qty}</span>
               <button class="qty-btn" onclick="updateQty(${i},1)">+</button>
             </div>
@@ -198,17 +839,17 @@ function renderCart() {
   }
 }
 
-// в”Ђв”Ђв”Ђ RENDER CHECKOUT ITEMS в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
+// ─── RENDER CHECKOUT ITEMS ───────────────────────────────────────
 function renderCheckoutItems() {
   const container = document.querySelector('.checkout-items-list');
   if (!container) return;
   const subtotal = getCartTotal();
   container.innerHTML = cart.map(item => `
     <div class="checkout-item">
-      <div class="checkout-item-img">${generateWatchSVG(item.bandColor,'small',item.bandLight||false)}</div>
+      <div class="checkout-item-img"><img src="${products[item.id]?.image || ''}" alt="${item.name} watch"/></div>
       <div>
-        <div class="checkout-item-name">Wellec Band вЂ“ ${item.name}</div>
-        <div class="checkout-item-variant">Qty: ${item.qty} В· ${item.plan==='subscription'?'$19/mo Subscription':'$249 One-Time'}</div>
+        <div class="checkout-item-name">Wellec Band – ${item.name}</div>
+        <div class="checkout-item-variant">Qty: ${item.qty} · ${item.plan==='subscription'?'$19/mo Subscription':'$249 One-Time'}</div>
       </div>
       <div class="checkout-item-price">$${(item.price*item.qty).toFixed(2)}</div>
     </div>`).join('');
@@ -216,13 +857,13 @@ function renderCheckoutItems() {
   document.querySelectorAll('.checkout-total').forEach(el => el.textContent=`$${subtotal.toFixed(2)}`);
 }
 
-// в”Ђв”Ђв”Ђ TOAST в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
+// ─── TOAST ───────────────────────────────────────────────────────
 function showToast(message) {
   let toast = document.querySelector('.toast');
   if (!toast) {
     toast = document.createElement('div');
     toast.className = 'toast';
-    toast.innerHTML = `<span class="toast-icon">вњ…</span><span class="toast-text"></span>`;
+    toast.innerHTML = `<span class="toast-icon">✅</span><span class="toast-text"></span>`;
     document.body.appendChild(toast);
   }
   toast.querySelector('.toast-text').textContent = message;
@@ -230,7 +871,7 @@ function showToast(message) {
   setTimeout(() => toast.classList.remove('show'), 3200);
 }
 
-// в”Ђв”Ђв”Ђ COLOR SWITCHER (product.html) в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
+// ─── COLOR SWITCHER (product.html) ──────────────────────────────
 function initColorSwitcher() {
   const options = document.querySelectorAll('.color-option');
   options.forEach(opt => {
@@ -255,7 +896,7 @@ function updateDisplay(pid) {
     }, 200);
   }
   const t = document.getElementById('product-title');
-  if (t) t.textContent = `Wellec Band вЂ“ ${p.name}`;
+  if (t) t.textContent = `Wellec Band – ${p.name}`;
   const cn = document.getElementById('selected-color-name');
   if (cn) cn.textContent = p.name;
   const bn = document.getElementById('breadcrumb-name');
@@ -266,7 +907,7 @@ function updateDisplay(pid) {
   });
 }
 
-// в”Ђв”Ђв”Ђ HERO WATCH ANIMATION в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
+// ─── HERO WATCH ANIMATION ────────────────────────────────────────
 function initHeroWatch() {
   const heroWatch = document.getElementById('hero-watch');
   if (!heroWatch) return;
@@ -286,7 +927,7 @@ function initHeroWatch() {
   }, 3000);
 }
 
-// в”Ђв”Ђв”Ђ SHOP / CART PAGE WATCH RENDERS в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
+// ─── SHOP / CART PAGE WATCH RENDERS ─────────────────────────────
 function initShopWatches() {
   document.querySelectorAll('[data-watch-color]').forEach(el => {
     const color = el.dataset.watchColor;
@@ -296,15 +937,708 @@ function initShopWatches() {
   });
 }
 
-// в”Ђв”Ђв”Ђ NAV HIGHLIGHT в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
+// ─── NAV HIGHLIGHT ───────────────────────────────────────────────
 function initNav() {
-  const page = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    if (a.getAttribute('href') === page) a.classList.add('active');
+  const links = [...document.querySelectorAll('.nav-links a[href^="#"]')];
+  if (!links.length) return;
+
+  const linkMap = new Map();
+  links.forEach((link) => {
+    const id = link.getAttribute('href').slice(1);
+    const section = document.getElementById(id);
+    if (section) linkMap.set(link, section);
+    link.addEventListener('click', () => {
+      links.forEach((item) => item.classList.remove('active'));
+      link.classList.add('active');
+    });
+  });
+
+  const activateLink = (id) => {
+    links.forEach((link) => {
+      link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+    });
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    const visible = entries
+      .filter((entry) => entry.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (visible?.target?.id) activateLink(visible.target.id);
+  }, { rootMargin: '-25% 0px -55% 0px', threshold: [0.2, 0.45, 0.7] });
+
+  linkMap.forEach((section) => observer.observe(section));
+
+  const currentHash = window.location.hash?.replace('#', '') || 'overview';
+  activateLink(currentHash);
+}
+
+function initWearPointSwitcher() {
+  const container = document.querySelector('.wear-all-day-points');
+  const cards = [...document.querySelectorAll('[data-wear-point]')];
+  const originalCards = cards.filter((card) => card.closest('.wear-all-day-points') === container);
+  if (!cards.length || !originalCards.length || !container) return;
+
+  const scrollToCard = (card, behavior = 'smooth') => {
+    const maxScroll = Math.max(container.scrollHeight - container.clientHeight, 0);
+    const targetTop = Math.min(Math.max(card.offsetTop - container.offsetTop, 0), maxScroll);
+    container.scrollTo({ top: targetTop, behavior });
+  };
+
+  const setGlowCard = (card) => {
+    cards.forEach((item) => item.classList.remove('is-glowing'));
+    if (card) card.classList.add('is-glowing');
+  };
+
+  const activate = (card) => {
+    cards.forEach((item) => item.classList.remove('is-active'));
+    card.classList.add('is-active');
+    setGlowCard(card);
+    scrollToCard(card, 'smooth');
+  };
+
+  cards.forEach((card) => {
+    card.addEventListener('mouseenter', () => activate(card));
+    card.addEventListener('click', () => activate(card));
+  });
+
+  let currentIndex = 0;
+  let autoTimer = 0;
+  let resumeTimer = 0;
+  let isAutoScrolling = false;
+  const autoStepDelay = 820;
+
+  const scheduleNextStep = (delay = autoStepDelay) => {
+    window.clearTimeout(autoTimer);
+    autoTimer = window.setTimeout(runAutoStep, delay);
+  };
+
+  const pauseAutoScroll = (delay = 1700) => {
+    window.clearTimeout(autoTimer);
+    window.clearTimeout(resumeTimer);
+    resumeTimer = window.setTimeout(() => scheduleNextStep(250), delay);
+  };
+
+  const jumpToOriginal = (index) => {
+    const normalizedIndex = ((index % originalCards.length) + originalCards.length) % originalCards.length;
+    const target = originalCards[normalizedIndex];
+    if (!target) return;
+    cards.forEach((item) => item.classList.remove('is-active'));
+    target.classList.add('is-active');
+    setGlowCard(target);
+    scrollToCard(target, 'auto');
+  };
+
+  const runAutoStep = () => {
+    const nextIndex = currentIndex + 1;
+    const target = originalCards[nextIndex];
+    if (!target) {
+      currentIndex = 0;
+      jumpToOriginal(0);
+      scheduleNextStep(autoStepDelay);
+      return;
+    }
+
+    isAutoScrolling = true;
+    cards.forEach((item) => item.classList.remove('is-active'));
+    target.classList.add('is-active');
+    setGlowCard(null);
+    scrollToCard(target, 'smooth');
+    currentIndex = nextIndex;
+
+    window.setTimeout(() => {
+      isAutoScrolling = false;
+      setGlowCard(target);
+      scheduleNextStep(autoStepDelay);
+    }, 420);
+  };
+
+  ['wheel', 'touchstart', 'pointerdown', 'mouseenter'].forEach((eventName) => {
+    container.addEventListener(eventName, () => pauseAutoScroll(), { passive: true });
+  });
+  container.addEventListener('mouseleave', () => pauseAutoScroll(650), { passive: true });
+  container.addEventListener('scroll', () => {
+    if (!isAutoScrolling) pauseAutoScroll(1400);
+  }, { passive: true });
+
+  jumpToOriginal(0);
+  scheduleNextStep(autoStepDelay);
+}
+
+function initHealthPictureScroller() {
+  const rail = document.querySelector('.whoop-health-picture-showcase');
+  if (!rail) return;
+  const cards = [...rail.querySelectorAll('.whoop-health-feature')];
+  const quickItems = [...document.querySelectorAll('.whoop-health-quickitem[data-health-jump]')];
+  if (!cards.length) return;
+  const section = document.querySelector('.whoop-health-picture-section');
+  let autoTimer = null;
+  let resumeTimer = null;
+  let isAutoScrolling = false;
+  const autoStepDelay = 2400;
+
+  if (section && !section.querySelector('.whoop-health-carousel-controls')) {
+    const controls = document.createElement('div');
+    controls.className = 'whoop-health-carousel-controls';
+    controls.innerHTML = `
+      <button class="whoop-health-carousel-btn prev" type="button" aria-label="Previous health card">&larr;</button>
+      <button class="whoop-health-carousel-btn next" type="button" aria-label="Next health card">&rarr;</button>
+    `;
+    const head = section.querySelector('.whoop-health-picture-head');
+    if (head) head.appendChild(controls);
+  }
+
+  const prevButton = section?.querySelector('.whoop-health-carousel-btn.prev');
+  const nextButton = section?.querySelector('.whoop-health-carousel-btn.next');
+
+  const setActiveCard = (card) => {
+    cards.forEach((item) => item.classList.toggle('is-active', item === card));
+    const activeIndex = Math.max(cards.indexOf(card), 0);
+    quickItems.forEach((item, index) => item.classList.toggle('is-active', index === activeIndex));
+  };
+
+  const getActiveIndex = () => Math.max(cards.findIndex((card) => card.classList.contains('is-active')), 0);
+
+  const scrollToCard = (index, behavior = 'smooth') => {
+    const target = cards[index];
+    if (!target) return;
+    const maxLeft = Math.max(rail.scrollWidth - rail.clientWidth, 0);
+    const rawLeft = target.offsetLeft - rail.offsetLeft;
+    const targetLeft = Math.min(Math.max(rawLeft, 0), maxLeft);
+    isAutoScrolling = true;
+    rail.scrollTo({ left: targetLeft, behavior });
+    setActiveCard(target);
+    window.setTimeout(() => {
+      isAutoScrolling = false;
+    }, behavior === 'smooth' ? 420 : 0);
+  };
+
+  const syncActiveCard = () => {
+    const viewportStart = rail.scrollLeft;
+    const viewportEnd = viewportStart + rail.clientWidth;
+    let activeCard = cards[0];
+    let maxVisibleWidth = -1;
+
+    cards.forEach((card) => {
+      const cardStart = card.offsetLeft - rail.offsetLeft;
+      const cardEnd = cardStart + card.offsetWidth;
+      const visibleStart = Math.max(cardStart, viewportStart);
+      const visibleEnd = Math.min(cardEnd, viewportEnd);
+      const visibleWidth = Math.max(0, visibleEnd - visibleStart);
+
+      if (visibleWidth > maxVisibleWidth) {
+        maxVisibleWidth = visibleWidth;
+        activeCard = card;
+      }
+    });
+
+    setActiveCard(activeCard);
+  };
+
+  const stopAuto = (resumeDelay = 2400) => {
+    if (autoTimer) window.clearTimeout(autoTimer);
+    if (resumeTimer) window.clearTimeout(resumeTimer);
+    autoTimer = null;
+    isAutoScrolling = false;
+    resumeTimer = window.setTimeout(startAuto, resumeDelay);
+  };
+
+  const advanceTo = (direction) => {
+    const activeIndex = getActiveIndex();
+    const nextIndex = (activeIndex + direction + cards.length) % cards.length;
+    scrollToCard(nextIndex);
+  };
+
+  const startAuto = () => {
+    if (autoTimer) window.clearTimeout(autoTimer);
+    if (resumeTimer) window.clearTimeout(resumeTimer);
+    resumeTimer = null;
+    autoTimer = window.setTimeout(() => {
+      advanceTo(1);
+      startAuto();
+    }, autoStepDelay);
+  };
+
+  ['mouseenter', 'pointerdown', 'touchstart', 'wheel'].forEach((eventName) => {
+    rail.addEventListener(eventName, () => stopAuto(), { passive: true });
+  });
+
+  rail.addEventListener('scroll', () => {
+    syncActiveCard();
+    if (!isAutoScrolling) stopAuto(1800);
+  }, { passive: true });
+  rail.addEventListener('mouseleave', () => stopAuto(900), { passive: true });
+
+  quickItems.forEach((item) => {
+    item.addEventListener('click', () => {
+      const index = Number(item.dataset.healthJump || 0);
+      scrollToCard(index);
+      stopAuto(2600);
+    });
+  });
+
+  prevButton?.addEventListener('click', () => {
+    advanceTo(-1);
+    stopAuto(2600);
+  });
+
+  nextButton?.addEventListener('click', () => {
+    advanceTo(1);
+    stopAuto(2600);
+  });
+
+  syncActiveCard();
+  scrollToCard(0, 'auto');
+  startAuto();
+}
+
+function initHealthTopicPopups() {
+  const topics = {
+    sleep: {
+      kicker: 'Night Recovery',
+      title: 'Optimize your sleep.',
+      body: 'See sleep duration, consistency, and overnight recovery in one place so the next day starts with better context.',
+      points: ['Sleep score and trend view', 'Recovery signal after each night', 'Bedtime rhythm that is easy to follow'],
+      stats: [
+        { label: 'Sleep score', value: '92%' },
+        { label: 'Deep sleep', value: '2h 18m' },
+        { label: 'Consistency', value: 'High' }
+      ],
+      visual: {
+        type: 'bars',
+        values: [48, 72, 60, 84, 94, 88]
+      }
+    },
+    readiness: {
+      kicker: 'Daily Readiness',
+      title: 'Know your readiness.',
+      body: 'Bring recovery, HRV, resting heart rate, and strain together before training, working hard, or taking it lighter.',
+      points: ['One clearer readiness view', 'Daily strain matched to recovery', 'Fast check before exercise or work'],
+      stats: [
+        { label: 'Readiness', value: '78' },
+        { label: 'HRV', value: '+11%' },
+        { label: 'Strain target', value: '12.4' }
+      ],
+      visual: {
+        type: 'line',
+        values: [28, 42, 36, 58, 54, 71, 78]
+      }
+    },
+    heart: {
+      kicker: 'Heart Context',
+      title: 'Stay close to heart health.',
+      body: 'Track resting heart rate and daily patterns over time so changes are easier to notice and discuss.',
+      points: ['Daily heart-rate context', 'Resting trend over time', 'A calmer view of signal changes'],
+      stats: [
+        { label: 'Resting HR', value: '58 bpm' },
+        { label: 'Range', value: '54-128' },
+        { label: 'Trend', value: 'Stable' }
+      ],
+      visual: {
+        type: 'pulse',
+        values: [18, 62, 28, 76, 34, 58, 22, 70]
+      }
+    },
+    longevity: {
+      kicker: 'Long-Term Health',
+      title: 'Build long-term health.',
+      body: 'Turn better sleep, strain balance, and recovery habits into a more sustainable routine over months, not just days.',
+      points: ['Habits that compound over time', 'Weekly and monthly pattern view', 'Focus on consistency, not noise'],
+      stats: [
+        { label: 'Recovery trend', value: '+14%' },
+        { label: 'Habit streak', value: '26 days' },
+        { label: 'Monthly balance', value: 'Strong' }
+      ],
+      visual: {
+        type: 'steps',
+        values: [22, 34, 34, 48, 48, 66, 66, 84]
+      }
+    },
+    shared: {
+      kicker: 'Shared Wellness',
+      title: 'Healthy living. Shared.',
+      body: 'Use Wellex as a simple shared check-in across generations so healthy routines, activity, and heart context stay visible together.',
+      points: ['Sync your wellness journey', 'Share progress across generations', 'Make healthy routines easier to sustain together'],
+      stats: [
+        { label: 'Dad HR', value: '65 bpm' },
+        { label: 'Son activity', value: '15,000 steps' },
+        { label: 'Shared focus', value: 'Daily routine' }
+      ],
+      visual: {
+        type: 'bars',
+        values: [42, 58, 74, 68, 84, 92]
+      }
+    }
+  };
+
+  const arrows = [...document.querySelectorAll('.whoop-health-feature-arrow')];
+  if (!arrows.length) return;
+
+  arrows.forEach((arrow, index) => {
+    if (arrow.tagName === 'SPAN') {
+      const topicKeys = ['sleep', 'readiness', 'heart', 'longevity', 'shared'];
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = arrow.className;
+      button.dataset.healthTopic = topicKeys[index] || 'sleep';
+      button.setAttribute('aria-label', `Open ${button.dataset.healthTopic} details`);
+      button.innerHTML = '&rarr;';
+      arrow.replaceWith(button);
+    }
+  });
+
+  if (!document.getElementById('health-topic-modal')) {
+    document.body.insertAdjacentHTML('beforeend', `
+      <div class="health-topic-modal" id="health-topic-modal" aria-hidden="true">
+        <div class="health-topic-backdrop" data-health-topic-close></div>
+        <div class="health-topic-dialog" role="dialog" aria-modal="true" aria-labelledby="health-topic-title">
+          <button class="health-topic-close" type="button" data-health-topic-close aria-label="Close topic details">&times;</button>
+          <div class="health-topic-kicker" id="health-topic-kicker"></div>
+          <h3 id="health-topic-title"></h3>
+          <p id="health-topic-body"></p>
+          <div class="health-topic-visual" id="health-topic-visual"></div>
+          <div class="health-topic-stats" id="health-topic-stats"></div>
+          <div class="health-topic-points" id="health-topic-points"></div>
+        </div>
+      </div>`);
+  }
+
+  const modal = document.getElementById('health-topic-modal');
+  const kickerEl = document.getElementById('health-topic-kicker');
+  const titleEl = document.getElementById('health-topic-title');
+  const bodyEl = document.getElementById('health-topic-body');
+  const visualEl = document.getElementById('health-topic-visual');
+  const statsEl = document.getElementById('health-topic-stats');
+  const pointsEl = document.getElementById('health-topic-points');
+  if (!modal || !kickerEl || !titleEl || !bodyEl || !visualEl || !statsEl || !pointsEl) return;
+
+  const renderVisual = (visual) => {
+    if (!visual) return '';
+
+    if (visual.type === 'bars') {
+      return `
+        <div class="health-visual-bars">
+          ${visual.values.map((value) => `<span style="height:${value}%"></span>`).join('')}
+        </div>`;
+    }
+
+    if (visual.type === 'line') {
+      return `
+        <div class="health-visual-line">
+          ${visual.values.map((value) => `<span style="height:${value}%"></span>`).join('')}
+        </div>`;
+    }
+
+    if (visual.type === 'pulse') {
+      return `
+        <div class="health-visual-pulse">
+          ${visual.values.map((value) => `<span style="height:${value}%"></span>`).join('')}
+        </div>`;
+    }
+
+    if (visual.type === 'steps') {
+      return `
+        <div class="health-visual-steps">
+          ${visual.values.map((value) => `<span style="height:${value}%"></span>`).join('')}
+        </div>`;
+    }
+
+    return '';
+  };
+
+  const closeModal = () => {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+
+  const openModal = (topicName) => {
+    const topic = topics[topicName];
+    if (!topic) return;
+    kickerEl.textContent = topic.kicker;
+    titleEl.textContent = topic.title;
+    bodyEl.textContent = topic.body;
+    visualEl.innerHTML = renderVisual(topic.visual);
+    statsEl.innerHTML = topic.stats.map((stat) => `
+      <div class="health-topic-stat">
+        <span>${stat.label}</span>
+        <strong>${stat.value}</strong>
+      </div>`).join('');
+    pointsEl.innerHTML = topic.points.map((point) => `<span>${point}</span>`).join('');
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  };
+
+  document.querySelectorAll('.whoop-health-feature-arrow[data-health-topic]').forEach((button) => {
+    button.addEventListener('click', () => openModal(button.dataset.healthTopic));
+  });
+
+  modal.querySelectorAll('[data-health-topic-close]').forEach((el) => {
+    el.addEventListener('click', closeModal);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
   });
 }
 
-// в”Ђв”Ђв”Ђ WVI GAUGE ANIMATION в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
+function initHowItWorksStepsScroller() {
+  const container = document.querySelector('.how-it-works-steps');
+  const cards = [...document.querySelectorAll('.how-it-works-steps .how-step-card')];
+  if (!container || cards.length < 2) return;
+
+  let autoTimer = 0;
+  let resumeTimer = 0;
+  let isAutoScrolling = false;
+  let currentIndex = 0;
+  const autoStepDelay = 1150;
+
+  const setActiveCard = (card) => {
+    cards.forEach((item) => item.classList.toggle('is-active', item === card));
+  };
+
+  const scrollToCard = (card, behavior = 'smooth') => {
+    const maxScroll = Math.max(container.scrollHeight - container.clientHeight, 0);
+    const targetTop = Math.min(Math.max(card.offsetTop - container.offsetTop, 0), maxScroll);
+    container.scrollTo({ top: targetTop, behavior });
+  };
+
+  const scheduleNextStep = (delay = autoStepDelay) => {
+    window.clearTimeout(autoTimer);
+    autoTimer = window.setTimeout(runAutoStep, delay);
+  };
+
+  const pauseAutoScroll = (delay = 1700) => {
+    window.clearTimeout(autoTimer);
+    window.clearTimeout(resumeTimer);
+    resumeTimer = window.setTimeout(() => scheduleNextStep(250), delay);
+  };
+
+  const jumpToIndex = (index) => {
+    const normalizedIndex = ((index % cards.length) + cards.length) % cards.length;
+    const target = cards[normalizedIndex];
+    if (!target) return;
+    currentIndex = normalizedIndex;
+    setActiveCard(target);
+    scrollToCard(target, 'auto');
+  };
+
+  const runAutoStep = () => {
+    const nextIndex = currentIndex + 1;
+    const target = cards[nextIndex];
+    if (!target) {
+      currentIndex = 0;
+      jumpToIndex(0);
+      scheduleNextStep(autoStepDelay);
+      return;
+    }
+
+    isAutoScrolling = true;
+    setActiveCard(target);
+    scrollToCard(target, 'smooth');
+    currentIndex = nextIndex;
+
+    window.setTimeout(() => {
+      isAutoScrolling = false;
+      scheduleNextStep(autoStepDelay);
+    }, 420);
+  };
+
+  ['wheel', 'touchstart', 'pointerdown', 'mouseenter'].forEach((eventName) => {
+    container.addEventListener(eventName, () => pauseAutoScroll(), { passive: true });
+  });
+  container.addEventListener('mouseleave', () => pauseAutoScroll(650), { passive: true });
+  container.addEventListener('scroll', () => {
+    const containerCenter = container.getBoundingClientRect().top + (container.clientHeight / 2);
+    let closestCard = cards[0];
+    let closestDistance = Number.POSITIVE_INFINITY;
+
+    cards.forEach((card) => {
+      const rect = card.getBoundingClientRect();
+      const cardCenter = rect.top + (rect.height / 2);
+      const distance = Math.abs(cardCenter - containerCenter);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestCard = card;
+      }
+    });
+
+    if (closestCard) {
+      currentIndex = Math.max(cards.indexOf(closestCard), 0);
+      setActiveCard(closestCard);
+    }
+
+    if (!isAutoScrolling) pauseAutoScroll(1400);
+  }, { passive: true });
+
+  jumpToIndex(0);
+  scheduleNextStep(autoStepDelay);
+}
+
+function initGuidanceTabs() {
+  const tabs = [...document.querySelectorAll('[data-guidance-tab], [data-guidance-target]')];
+  const panels = [...document.querySelectorAll('[data-guidance-panel]')];
+  if (!tabs.length || !panels.length) return;
+
+  const activate = (name) => {
+    tabs.forEach((tab) => {
+      const tabName = tab.dataset.guidanceTab || tab.dataset.guidanceTarget;
+      const isActive = tabName === name;
+      tab.classList.toggle('is-active', isActive);
+      tab.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+    panels.forEach((panel) => panel.classList.toggle('is-active', panel.dataset.guidancePanel === name));
+  };
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => activate(tab.dataset.guidanceTab || tab.dataset.guidanceTarget));
+  });
+}
+
+function initInsightTabs() {
+  const items = [...document.querySelectorAll('[data-insight], [data-insight-target]')];
+  const panels = [...document.querySelectorAll('[data-insight-panel]')];
+  if (!items.length || !panels.length) return;
+
+  const activate = (name) => {
+    items.forEach((item) => {
+      const itemName = item.dataset.insight || item.dataset.insightTarget;
+      const isActive = itemName === name;
+      item.classList.toggle('is-active', isActive);
+      item.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+    panels.forEach((panel) => panel.classList.toggle('is-active', panel.dataset.insightPanel === name));
+  };
+
+  items.forEach((item) => {
+    item.addEventListener('click', () => activate(item.dataset.insight || item.dataset.insightTarget));
+  });
+}
+
+function initDayPhaseTheme() {
+  const shell = document.querySelector('.watch-story-media-shell');
+  const items = [...document.querySelectorAll('.watch-story-day[data-day-phase]')];
+  const storageKey = 'wellexDayPhaseOverride';
+
+  const getAutoPhase = () => {
+    const hour = new Date().getHours();
+    if (hour >= 5 && hour < 12) return 'morning';
+    if (hour >= 12 && hour < 17) return 'afternoon';
+    if (hour >= 17 && hour < 21) return 'evening';
+    return 'night';
+  };
+
+  const getInitialPhase = () => {
+    try {
+      const saved = localStorage.getItem(storageKey);
+      if (saved && items.some((item) => item.dataset.dayPhase === saved)) return saved;
+    } catch (error) {
+      // Ignore storage access issues and fall back to automatic phase detection.
+    }
+
+    return getAutoPhase();
+  };
+
+  const activate = (phase) => {
+    document.body.dataset.dayPhase = phase;
+    if (!shell || !items.length) return;
+    shell.dataset.phase = phase;
+    items.forEach((item) => {
+      const isActive = item.dataset.dayPhase === phase;
+      item.classList.toggle('is-active', isActive);
+      item.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+  };
+
+  const initial = getInitialPhase();
+  activate(initial);
+  if (!shell || !items.length) return;
+
+  items.forEach((item) => {
+    item.addEventListener('click', () => {
+      const phase = item.dataset.dayPhase;
+      activate(phase);
+      try {
+        localStorage.setItem(storageKey, phase);
+      } catch (error) {
+        // Ignore storage access issues and keep the in-memory selection.
+      }
+    });
+  });
+}
+
+function initStoryCards() {
+  const stage = document.querySelector('.watch-story-stage');
+  const cards = [...document.querySelectorAll('.watch-story-card[data-story-index]')];
+  if (!stage || !cards.length) return;
+
+  const isMobile = () => window.innerWidth <= 720;
+  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+  const easeInOut = (value) => 0.5 - (Math.cos(Math.PI * value) / 2);
+
+  const applyDesktopStory = () => {
+    const rect = stage.getBoundingClientRect();
+    const viewportHeight = window.innerHeight || 1;
+    const totalScroll = Math.max(stage.offsetHeight - viewportHeight, 1);
+    const traveled = Math.min(Math.max(-rect.top, 0), totalScroll);
+    const progress = traveled / totalScroll;
+    const hasStarted = progress > 0.13;
+    const easedProgress = easeInOut(progress);
+    const spin = easedProgress * (cards.length - 1);
+    const activeIndex = Math.min(cards.length - 1, Math.max(0, Math.round(spin)));
+
+    cards.forEach((card, index) => {
+      const delta = index - spin;
+      const distance = Math.abs(delta);
+      const proximity = clamp(1 - distance, 0, 1);
+      const isActive = hasStarted && distance < 0.5;
+      const y = delta * 168;
+      const z = -Math.min(distance * 250, 420);
+      const rotate = delta * -20;
+      const scale = 0.84 + (proximity * 0.16);
+      const opacity = proximity > 0.04 ? Math.pow(proximity, 1.45) : 0;
+
+      card.style.setProperty('--story-card-y', `${y}px`);
+      card.style.setProperty('--story-card-z', `${z}px`);
+      card.style.setProperty('--story-card-rotate', `${rotate}deg`);
+      card.style.setProperty('--story-card-scale', `${scale}`);
+      card.style.setProperty('--story-card-opacity', `${hasStarted ? opacity : 0}`);
+      card.classList.toggle('is-visible', hasStarted);
+      card.classList.toggle('is-active', isActive && index === activeIndex);
+    });
+  };
+
+  const applyMobileStory = () => {
+    cards.forEach((card, index) => {
+      card.classList.add('is-visible');
+      card.classList.toggle('is-active', index === 0);
+      card.style.removeProperty('--story-card-y');
+      card.style.removeProperty('--story-card-z');
+      card.style.removeProperty('--story-card-rotate');
+      card.style.removeProperty('--story-card-scale');
+      card.style.removeProperty('--story-card-opacity');
+    });
+  };
+
+  let ticking = false;
+  const updateStory = () => {
+    if (isMobile()) applyMobileStory();
+    else applyDesktopStory();
+    ticking = false;
+  };
+
+  const requestUpdate = () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(updateStory);
+  };
+
+  updateStory();
+  window.addEventListener('scroll', requestUpdate, { passive: true });
+  window.addEventListener('resize', requestUpdate);
+}
+
+// ─── WVI GAUGE ANIMATION ─────────────────────────────────────────
 function animateWVI(targetId, targetValue) {
   const el = document.getElementById(targetId);
   if (!el) return;
@@ -411,6 +1745,8 @@ function initFitFinder() {
   let preferredColor = null;
   let currentQuestion = 0;
   let scores = {};
+  const isColorsLandingPage = /(^|[\\/])shop\.html$/i.test(window.location.pathname)
+    || (!window.location.pathname.split('/').pop() && document.querySelector('.collection-header'));
 
   const resetGame = () => {
     currentQuestion = 0;
@@ -505,6 +1841,10 @@ function initFitFinder() {
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
   });
+
+  if (isColorsLandingPage) {
+    openModal('classic-black');
+  }
 }
 
 function initCollectionZoom() {
@@ -843,7 +2183,7 @@ function initSiteReviewForm() {
 
     const stars = document.createElement('span');
     stars.className = 'review-card-stars';
-    stars.textContent = `${'в…'.repeat(rating)}${'в†'.repeat(5 - rating)}`;
+    stars.textContent = `${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}`;
 
     topline.append(tag, useCasePill);
     meta.append(author, stars);
@@ -930,7 +2270,7 @@ function initScrollMotion() {
   window.addEventListener('resize', requestParallax);
 }
 
-// в”Ђв”Ђв”Ђ CHECKOUT FORM в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
+// ─── CHECKOUT FORM ───────────────────────────────────────────────
 function initCheckoutForm() {
   const form = document.getElementById('checkout-form');
   if (!form) return;
@@ -942,13 +2282,13 @@ function placeOrderAction() {
   const inner = document.querySelector('.checkout-inner');
   if (inner) inner.innerHTML = `
     <div style="grid-column:1/-1;text-align:center;padding:80px 20px">
-      <div style="font-size:5rem;margin-bottom:24px">рџЋ‰</div>
-      <div style="display:inline-block;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);color:var(--green);padding:8px 20px;border-radius:20px;font-size:0.8rem;font-weight:700;letter-spacing:1px;margin-bottom:24px;text-transform:uppercase">Order Confirmed</div>
+      <div style="font-size:5rem;margin-bottom:24px">🎉</div>
+      <div style="display:inline-block;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:#ffffff;padding:8px 20px;border-radius:20px;font-size:0.8rem;font-weight:700;letter-spacing:1px;margin-bottom:24px;text-transform:uppercase">Order Confirmed</div>
       <h2 style="font-size:2.5rem;font-weight:900;letter-spacing:-1.5px;margin-bottom:16px">Order Placed!</h2>
       <p style="color:var(--light-gray);margin-bottom:8px;font-size:1rem;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7">
         Your Wellec Band is on its way. Activate your subscription in the app and start earning DeFi yield through Emotional Mining.
       </p>
-      <p style="color:var(--gray);font-size:0.85rem;margin-bottom:40px">Estimated delivery: 5вЂ“7 business days В· App setup guide sent to your email.</p>
+      <p style="color:var(--gray);font-size:0.85rem;margin-bottom:40px">Estimated delivery: 5–7 business days · App setup guide sent to your email.</p>
       <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
         <a href="index.html" class="btn-primary">Back to Home</a>
         <a href="shop.html" class="btn-outline">Keep Shopping</a>
@@ -956,10 +2296,22 @@ function placeOrderAction() {
     </div>`;
 }
 
-// в”Ђв”Ђв”Ђ INIT в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
+// ─── INIT ────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+  setCurrentLanguage(getCurrentLanguage());
+  renderSharedHeader();
+  renderSharedFooter();
+  renderSharedFitFinder();
   updateCartBadge();
   initNav();
+  initStoryCards();
+  initWearPointSwitcher();
+  initHealthPictureScroller();
+  initHealthTopicPopups();
+  initHowItWorksStepsScroller();
+  initGuidanceTabs();
+  initInsightTabs();
+  initDayPhaseTheme();
   initHeroWatch();
   initShopWatches();
   initColorSwitcher();
@@ -981,4 +2333,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, {threshold: 0.5});
     wviEls.forEach(el => obs.observe(el));
   }
+
+  initLanguageObserver();
+  applyLanguageToPage(getCurrentLanguage());
 });
