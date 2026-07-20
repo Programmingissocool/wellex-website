@@ -430,13 +430,13 @@ function renderSharedHeader() {
     });
 
     window.addEventListener('resize', () => {
-      if (window.innerWidth > 980 && nav.classList.contains('is-open')) {
+      if (window.innerWidth > 1180 && nav.classList.contains('is-open')) {
         setMenuState(false);
       }
     });
 
     document.addEventListener('click', (event) => {
-      if (window.innerWidth > 980 || !nav.classList.contains('is-open')) return;
+      if (window.innerWidth > 1180 || !nav.classList.contains('is-open')) return;
       if (nav.contains(event.target)) return;
       setMenuState(false);
     });
