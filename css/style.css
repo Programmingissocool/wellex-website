@@ -15025,3 +15025,735 @@ footer {
     display: none !important;
   }
 }
+
+/* --- RESPONSIVE COMPLETION ----------------------------------------- */
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+video,
+svg {
+  max-width: 100%;
+}
+
+.dashboard-home.whoop-home .section,
+.dashboard-home.whoop-home .dashboard-hero,
+.dashboard-home.whoop-home .page-header,
+.dashboard-home.whoop-home .cart-page,
+.dashboard-home.whoop-home .checkout-page,
+.dashboard-home.whoop-home .product-detail {
+  max-width: 100vw;
+}
+
+.dashboard-home.whoop-home .dashboard-nav {
+  min-width: 0;
+}
+
+.dashboard-home.whoop-home .nav-logo-media {
+  min-width: 0;
+}
+
+.dashboard-home.whoop-home .nav-logo-word {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dashboard-home.whoop-home .watch-story-media-shell,
+.dashboard-home.whoop-home .wear-video-shell,
+.dashboard-home.whoop-home .whoop-health-feature-media,
+.dashboard-home.whoop-home .whoop-guidance-media,
+.dashboard-home.whoop-home .whoop-insight-media,
+.dashboard-home.whoop-home .whoop-device-card,
+.dashboard-home.whoop-home .product-detail-image-box,
+.dashboard-home.whoop-home .collection-card .product-card-image,
+.dashboard-home.whoop-home .collection-photo,
+.dashboard-home.whoop-home .collection-showcase-image {
+  max-width: 100%;
+}
+
+.dashboard-home.whoop-home .watch-story-media-shell,
+.dashboard-home.whoop-home .wear-video-shell {
+  position: relative;
+}
+
+.dashboard-home.whoop-home .watch-story-video,
+.dashboard-home.whoop-home .wear-video,
+.dashboard-home.whoop-home .dashboard-hero-video,
+.dashboard-home.whoop-home .whoop-health-feature-media img,
+.dashboard-home.whoop-home .whoop-guidance-media img,
+.dashboard-home.whoop-home .whoop-insight-media img,
+.dashboard-home.whoop-home .collection-card img,
+.dashboard-home.whoop-home .collection-photo img,
+.dashboard-home.whoop-home .product-detail-image-box img {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 1180px) {
+  .dashboard-home.whoop-home {
+    --responsive-page-pad: clamp(20px, 4vw, 44px);
+  }
+
+  .dashboard-home.whoop-home .dashboard-nav .nav-links {
+    max-height: calc(100vh - 92px) !important;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .dashboard-home.whoop-home .nav-cart-wrap {
+    flex-basis: auto !important;
+  }
+
+  .dashboard-home.whoop-home .nav-cart-link,
+  .dashboard-home.whoop-home .nav-language-switcher,
+  .dashboard-home.whoop-home .nav-account {
+    justify-content: center;
+  }
+
+  .dashboard-home.whoop-home .section,
+  .dashboard-home.whoop-home .dashboard-hero,
+  .dashboard-home.whoop-home .page-header,
+  .dashboard-home.whoop-home .product-detail-inner,
+  .dashboard-home.whoop-home .cart-inner,
+  .dashboard-home.whoop-home .checkout-inner,
+  .dashboard-home.whoop-home .footer-inner {
+    padding-left: var(--responsive-page-pad) !important;
+    padding-right: var(--responsive-page-pad) !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-stage,
+  .dashboard-home.whoop-home .wear-all-day-section,
+  .dashboard-home.whoop-home .dashboard-hero-shell,
+  .dashboard-home.whoop-home .whoop-hero-shell,
+  .dashboard-home.whoop-home .whoop-guidance-shell,
+  .dashboard-home.whoop-home .whoop-guidance-panel,
+  .dashboard-home.whoop-home .whoop-insight-panel,
+  .dashboard-home.whoop-home .whoop-editorial-grid,
+  .dashboard-home.whoop-home .whoop-market-grid,
+  .dashboard-home.whoop-home .whoop-social-grid,
+  .dashboard-home.whoop-home .collection-header,
+  .dashboard-home.whoop-home .collection-header-visual,
+  .dashboard-home.whoop-home .product-detail-inner,
+  .dashboard-home.whoop-home .cart-inner,
+  .dashboard-home.whoop-home .checkout-inner,
+  .dashboard-home.whoop-home .health-deal-dialog,
+  .dashboard-home.whoop-home .fit-finder-dialog,
+  .dashboard-home.whoop-home .footer-top {
+    grid-template-columns: 1fr !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-pin,
+  .dashboard-home.whoop-home .how-it-works-intro,
+  .dashboard-home.whoop-home .cart-summary,
+  .dashboard-home.whoop-home .checkout-summary {
+    position: static !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-media-shell,
+  .dashboard-home.whoop-home .wear-video-shell {
+    min-height: clamp(420px, 68vh, 720px) !important;
+  }
+
+  .dashboard-home.whoop-home .cart-inner,
+  .dashboard-home.whoop-home .checkout-inner {
+    max-width: 860px;
+  }
+}
+
+@media (max-width: 860px) {
+  .dashboard-home.whoop-home {
+    --responsive-page-pad: clamp(18px, 5vw, 32px);
+  }
+
+  .dashboard-home.whoop-home .dashboard-title,
+  .dashboard-home.whoop-home .section-title,
+  .dashboard-home.whoop-home .product-detail-title,
+  .dashboard-home.whoop-home .checkout-page-title,
+  .dashboard-home.whoop-home .cart-page-title {
+    max-width: 100% !important;
+    overflow-wrap: anywhere;
+  }
+
+  .dashboard-home.whoop-home .dashboard-sub,
+  .dashboard-home.whoop-home .section-sub,
+  .dashboard-home.whoop-home p,
+  .dashboard-home.whoop-home li {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .dashboard-home.whoop-home .whoop-health-picture-showcase,
+  .dashboard-home.whoop-home .whoop-band-grid,
+  .dashboard-home.whoop-home .whoop-metric-row,
+  .dashboard-home.whoop-home .whoop-reference-grid,
+  .dashboard-home.whoop-home .whoop-hero-points,
+  .dashboard-home.whoop-home .whoop-split-grid,
+  .dashboard-home.whoop-home .whoop-app-grid,
+  .dashboard-home.whoop-home .collection-grid,
+  .dashboard-home.whoop-home .collection-showcase-grid,
+  .dashboard-home.whoop-home .collection-showcase-grid-images,
+  .dashboard-home.whoop-home .collection-showcase-grid-summaries,
+  .dashboard-home.whoop-home .cart-recommendations-grid,
+  .dashboard-home.whoop-home .form-grid,
+  .dashboard-home.whoop-home .health-options,
+  .dashboard-home.whoop-home .fit-options {
+    grid-template-columns: 1fr !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-card {
+    left: 20px !important;
+    right: 20px !important;
+    width: auto !important;
+    max-width: none !important;
+    padding: 22px !important;
+    transform:
+      translate3d(0, calc(-50% + var(--story-card-y, 36px)), 0)
+      rotateX(var(--story-card-rotate, -12deg))
+      scale(var(--story-card-scale, 0.98)) !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-benefits,
+  .dashboard-home.whoop-home .wear-benefit-strip,
+  .dashboard-home.whoop-home .whoop-insight-tabs,
+  .dashboard-home.whoop-home .collection-chip-row {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dashboard-home.whoop-home .wear-video-caption {
+    margin-left: 0;
+    text-align: left;
+    align-self: stretch;
+  }
+
+  .dashboard-home.whoop-home .whoop-cta-shell,
+  .dashboard-home.whoop-home .whoop-cta-actions,
+  .dashboard-home.whoop-home .hero-btns,
+  .dashboard-home.whoop-home .product-actions,
+  .dashboard-home.whoop-home .product-detail-actions,
+  .dashboard-home.whoop-home .health-wheel-actions,
+  .dashboard-home.whoop-home .fit-result-actions {
+    width: 100%;
+  }
+
+  .dashboard-home.whoop-home .whoop-cta-actions,
+  .dashboard-home.whoop-home .hero-btns,
+  .dashboard-home.whoop-home .product-actions,
+  .dashboard-home.whoop-home .product-detail-actions,
+  .dashboard-home.whoop-home .health-wheel-actions,
+  .dashboard-home.whoop-home .fit-result-actions {
+    justify-content: stretch;
+  }
+
+  .dashboard-home.whoop-home .whoop-cta-actions > *,
+  .dashboard-home.whoop-home .hero-btns > *,
+  .dashboard-home.whoop-home .product-actions > *,
+  .dashboard-home.whoop-home .product-detail-actions > *,
+  .dashboard-home.whoop-home .health-wheel-actions > *,
+  .dashboard-home.whoop-home .fit-result-actions > * {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .dashboard-home.whoop-home .cart-item,
+  .dashboard-home.whoop-home .checkout-item {
+    grid-template-columns: 92px minmax(0, 1fr) !important;
+  }
+
+  .dashboard-home.whoop-home .cart-item-price,
+  .dashboard-home.whoop-home .checkout-item-price {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+
+  .dashboard-home.whoop-home .cart-summary,
+  .dashboard-home.whoop-home .checkout-summary,
+  .dashboard-home.whoop-home .checkout-section,
+  .dashboard-home.whoop-home .health-deal-side,
+  .dashboard-home.whoop-home .health-deal-main,
+  .dashboard-home.whoop-home .fit-finder-hero,
+  .dashboard-home.whoop-home .fit-question-stage,
+  .dashboard-home.whoop-home .fit-result {
+    padding: 24px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .dashboard-home.whoop-home {
+    --responsive-page-pad: 16px;
+  }
+
+  .dashboard-home.whoop-home .dashboard-nav {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .dashboard-home.whoop-home .nav-logo-mark {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .dashboard-home.whoop-home .nav-logo-word {
+    max-width: 92px;
+    font-size: 0.96rem;
+    letter-spacing: 0.2em;
+  }
+
+  .dashboard-home.whoop-home .dashboard-title {
+    font-size: clamp(3rem, 18vw, 4rem) !important;
+  }
+
+  .dashboard-home.whoop-home .section-title,
+  .dashboard-home.whoop-home .product-detail-title {
+    font-size: clamp(2.5rem, 14vw, 3.5rem) !important;
+  }
+
+  .dashboard-home.whoop-home .section-label,
+  .dashboard-home.whoop-home .hero-badge,
+  .dashboard-home.whoop-home .eyebrow {
+    letter-spacing: 0.14em;
+  }
+
+  .dashboard-home.whoop-home .watch-story-stage,
+  .dashboard-home.whoop-home .wear-all-day-section,
+  .dashboard-home.whoop-home .dashboard-hero,
+  .dashboard-home.whoop-home .whoop-health-picture-section,
+  .dashboard-home.whoop-home .whoop-guidance-section,
+  .dashboard-home.whoop-home .whoop-insights-section,
+  .dashboard-home.whoop-home .whoop-band-section,
+  .dashboard-home.whoop-home .whoop-editorial-section,
+  .dashboard-home.whoop-home .whoop-quote-section,
+  .dashboard-home.whoop-home .whoop-split-section,
+  .dashboard-home.whoop-home .whoop-app-section,
+  .dashboard-home.whoop-home .whoop-market-section,
+  .dashboard-home.whoop-home .home-colors-section,
+  .dashboard-home.whoop-home .reviews-section,
+  .dashboard-home.whoop-home .whoop-reference-section,
+  .dashboard-home.whoop-home .whoop-social-section,
+  .dashboard-home.whoop-home .whoop-cta-section,
+  .dashboard-home.whoop-home .product-detail-inner,
+  .dashboard-home.whoop-home .cart-inner,
+  .dashboard-home.whoop-home .checkout-inner {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-media-shell,
+  .dashboard-home.whoop-home .wear-video-shell {
+    min-height: 420px !important;
+    border-radius: 22px;
+  }
+
+  .dashboard-home.whoop-home .watch-story-hero-copy {
+    left: 18px !important;
+    right: 18px !important;
+    bottom: 24px !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-day-rail {
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-card {
+    left: 12px !important;
+    right: 12px !important;
+    padding: 18px !important;
+  }
+
+  .dashboard-home.whoop-home .cart-item,
+  .dashboard-home.whoop-home .checkout-item,
+  .dashboard-home.whoop-home .nav-cart-preview-item {
+    grid-template-columns: 1fr !important;
+  }
+
+  .dashboard-home.whoop-home .cart-item-image,
+  .dashboard-home.whoop-home .checkout-item-img {
+    width: 100%;
+    height: 180px;
+  }
+
+  .dashboard-home.whoop-home .summary-row,
+  .dashboard-home.whoop-home .promo-input {
+    gap: 10px;
+  }
+
+  .dashboard-home.whoop-home .promo-input {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-home.whoop-home .health-deal-dialog,
+  .dashboard-home.whoop-home .fit-finder-dialog,
+  .dashboard-home.whoop-home .review-modal-dialog,
+  .dashboard-home.whoop-home .health-topic-dialog {
+    width: min(100%, calc(100vw - 24px)) !important;
+    max-height: calc(100vh - 24px);
+    overflow-y: auto;
+  }
+}
+
+/* --- FULL RESPONSIVE HARDENING ------------------------------------- */
+.dashboard-home.whoop-home *,
+.dashboard-home.topic-page * {
+  min-width: 0;
+}
+
+.dashboard-home.whoop-home img,
+.dashboard-home.whoop-home video,
+.dashboard-home.whoop-home canvas,
+.dashboard-home.topic-page img,
+.dashboard-home.topic-page video,
+.dashboard-home.topic-page canvas {
+  max-width: 100%;
+}
+
+.dashboard-home.whoop-home img,
+.dashboard-home.topic-page img {
+  height: auto;
+}
+
+.dashboard-home.whoop-home table,
+.dashboard-home.topic-page table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.dashboard-home.whoop-home input,
+.dashboard-home.whoop-home select,
+.dashboard-home.whoop-home textarea,
+.dashboard-home.whoop-home button,
+.dashboard-home.whoop-home .btn,
+.dashboard-home.whoop-home .btn-primary,
+.dashboard-home.whoop-home .btn-outline,
+.dashboard-home.topic-page input,
+.dashboard-home.topic-page select,
+.dashboard-home.topic-page textarea,
+.dashboard-home.topic-page button,
+.dashboard-home.topic-page .btn,
+.dashboard-home.topic-page .btn-primary,
+.dashboard-home.topic-page .btn-outline {
+  max-width: 100%;
+}
+
+.dashboard-home.whoop-home .dashboard-nav,
+.dashboard-home.topic-page .dashboard-nav {
+  width: 100%;
+}
+
+.dashboard-home.whoop-home .dashboard-nav .nav-logo,
+.dashboard-home.topic-page .dashboard-nav .nav-logo {
+  flex-shrink: 1;
+}
+
+.dashboard-home.whoop-home .nav-toggle,
+.dashboard-home.topic-page .nav-toggle {
+  flex-shrink: 0;
+}
+
+.dashboard-home.whoop-home .section-title,
+.dashboard-home.whoop-home .dashboard-title,
+.dashboard-home.whoop-home .product-detail-title,
+.dashboard-home.whoop-home .checkout-page-title,
+.dashboard-home.whoop-home .cart-page-title,
+.dashboard-home.topic-page .section-title,
+.dashboard-home.topic-page .dashboard-title,
+.dashboard-home.topic-page .product-detail-title,
+.dashboard-home.topic-page .checkout-page-title,
+.dashboard-home.topic-page .cart-page-title {
+  overflow-wrap: anywhere;
+}
+
+.dashboard-home.whoop-home .cart-items-list,
+.dashboard-home.whoop-home .checkout-items-list,
+.dashboard-home.topic-page .cart-items-list,
+.dashboard-home.topic-page .checkout-items-list {
+  overflow: visible;
+}
+
+@media (max-width: 1180px) {
+  .dashboard-home.whoop-home .dashboard-nav .nav-links,
+  .dashboard-home.topic-page .dashboard-nav .nav-links {
+    max-height: min(72vh, calc(100vh - 86px)) !important;
+    overflow-y: auto !important;
+  }
+
+  .dashboard-home.whoop-home .dashboard-nav .nav-links > *,
+  .dashboard-home.topic-page .dashboard-nav .nav-links > * {
+    min-width: 0 !important;
+  }
+
+  .dashboard-home.whoop-home .checkout-summary,
+  .dashboard-home.whoop-home .cart-summary,
+  .dashboard-home.whoop-home .product-detail-visual,
+  .dashboard-home.whoop-home .collection-header-copy,
+  .dashboard-home.whoop-home .how-it-works-intro,
+  .dashboard-home.topic-page .checkout-summary,
+  .dashboard-home.topic-page .cart-summary,
+  .dashboard-home.topic-page .product-detail-visual,
+  .dashboard-home.topic-page .collection-header-copy,
+  .dashboard-home.topic-page .how-it-works-intro {
+    position: static !important;
+    top: auto !important;
+  }
+
+  .dashboard-home.whoop-home .product-detail,
+  .dashboard-home.whoop-home .checkout-page,
+  .dashboard-home.whoop-home .cart-page,
+  .dashboard-home.topic-page .product-detail,
+  .dashboard-home.topic-page .checkout-page,
+  .dashboard-home.topic-page .cart-page {
+    padding-top: 86px !important;
+  }
+
+  .dashboard-home.whoop-home .product-detail-inner,
+  .dashboard-home.whoop-home .checkout-inner,
+  .dashboard-home.whoop-home .cart-inner,
+  .dashboard-home.whoop-home .collection-header,
+  .dashboard-home.whoop-home .collection-showcase-grid,
+  .dashboard-home.whoop-home .how-it-works-section,
+  .dashboard-home.whoop-home .page-header,
+  .dashboard-home.topic-page .product-detail-inner,
+  .dashboard-home.topic-page .checkout-inner,
+  .dashboard-home.topic-page .cart-inner,
+  .dashboard-home.topic-page .collection-header,
+  .dashboard-home.topic-page .collection-showcase-grid,
+  .dashboard-home.topic-page .how-it-works-section,
+  .dashboard-home.topic-page .page-header {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 980px) {
+  .dashboard-home.whoop-home .collection-header,
+  .dashboard-home.whoop-home .collection-showcase-grid,
+  .dashboard-home.whoop-home .collection-header-visual,
+  .dashboard-home.whoop-home .product-detail-inner,
+  .dashboard-home.whoop-home .checkout-inner,
+  .dashboard-home.whoop-home .cart-inner,
+  .dashboard-home.whoop-home .footer-top,
+  .dashboard-home.whoop-home .how-it-works-section,
+  .dashboard-home.whoop-home .health-picture-section,
+  .dashboard-home.whoop-home .wear-all-day-section,
+  .dashboard-home.whoop-home .reviews-shell,
+  .dashboard-home.whoop-home .compare-band,
+  .dashboard-home.whoop-home .pricing-table,
+  .dashboard-home.topic-page .collection-header,
+  .dashboard-home.topic-page .collection-showcase-grid,
+  .dashboard-home.topic-page .collection-header-visual,
+  .dashboard-home.topic-page .product-detail-inner,
+  .dashboard-home.topic-page .checkout-inner,
+  .dashboard-home.topic-page .cart-inner,
+  .dashboard-home.topic-page .footer-top,
+  .dashboard-home.topic-page .how-it-works-section,
+  .dashboard-home.topic-page .health-picture-section,
+  .dashboard-home.topic-page .wear-all-day-section,
+  .dashboard-home.topic-page .reviews-shell,
+  .dashboard-home.topic-page .compare-band,
+  .dashboard-home.topic-page .pricing-table {
+    grid-template-columns: 1fr !important;
+  }
+
+  .dashboard-home.whoop-home .collection-grid,
+  .dashboard-home.whoop-home .cart-recommendations-grid,
+  .dashboard-home.whoop-home .color-rail,
+  .dashboard-home.whoop-home .collection-showcase-grid-images,
+  .dashboard-home.whoop-home .collection-showcase-grid-summaries,
+  .dashboard-home.topic-page .collection-grid,
+  .dashboard-home.topic-page .cart-recommendations-grid,
+  .dashboard-home.topic-page .color-rail,
+  .dashboard-home.topic-page .collection-showcase-grid-images,
+  .dashboard-home.topic-page .collection-showcase-grid-summaries {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .dashboard-home.whoop-home .product-detail-image-box,
+  .dashboard-home.whoop-home .collection-header-visual,
+  .dashboard-home.whoop-home .collection-photo,
+  .dashboard-home.whoop-home .collection-showcase-image,
+  .dashboard-home.topic-page .product-detail-image-box,
+  .dashboard-home.topic-page .collection-header-visual,
+  .dashboard-home.topic-page .collection-photo,
+  .dashboard-home.topic-page .collection-showcase-image {
+    min-height: clamp(260px, 48vw, 460px) !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .dashboard-home.whoop-home .section,
+  .dashboard-home.whoop-home .dashboard-hero,
+  .dashboard-home.whoop-home .page-header,
+  .dashboard-home.whoop-home .product-detail-inner,
+  .dashboard-home.whoop-home .checkout-inner,
+  .dashboard-home.whoop-home .cart-inner,
+  .dashboard-home.whoop-home .footer-inner,
+  .dashboard-home.topic-page .section,
+  .dashboard-home.topic-page .dashboard-hero,
+  .dashboard-home.topic-page .page-header,
+  .dashboard-home.topic-page .product-detail-inner,
+  .dashboard-home.topic-page .checkout-inner,
+  .dashboard-home.topic-page .cart-inner,
+  .dashboard-home.topic-page .footer-inner {
+    width: 100% !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .dashboard-home.whoop-home [class$="-grid"],
+  .dashboard-home.whoop-home [class*="-grid "],
+  .dashboard-home.whoop-home .preview-grid,
+  .dashboard-home.topic-page [class$="-grid"],
+  .dashboard-home.topic-page [class*="-grid "],
+  .dashboard-home.topic-page .preview-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .dashboard-home.whoop-home .hero-btns,
+  .dashboard-home.whoop-home .watch-story-hero-actions,
+  .dashboard-home.whoop-home .whoop-cta-actions,
+  .dashboard-home.whoop-home .product-actions,
+  .dashboard-home.whoop-home .product-detail-actions,
+  .dashboard-home.whoop-home .fit-result-actions,
+  .dashboard-home.whoop-home .health-wheel-actions,
+  .dashboard-home.topic-page .hero-btns,
+  .dashboard-home.topic-page .watch-story-hero-actions,
+  .dashboard-home.topic-page .whoop-cta-actions,
+  .dashboard-home.topic-page .product-actions,
+  .dashboard-home.topic-page .product-detail-actions,
+  .dashboard-home.topic-page .fit-result-actions,
+  .dashboard-home.topic-page .health-wheel-actions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    width: 100%;
+  }
+
+  .dashboard-home.whoop-home .hero-btns > *,
+  .dashboard-home.whoop-home .watch-story-hero-actions > *,
+  .dashboard-home.whoop-home .whoop-cta-actions > *,
+  .dashboard-home.whoop-home .product-actions > *,
+  .dashboard-home.whoop-home .product-detail-actions > *,
+  .dashboard-home.topic-page .hero-btns > *,
+  .dashboard-home.topic-page .watch-story-hero-actions > *,
+  .dashboard-home.topic-page .whoop-cta-actions > *,
+  .dashboard-home.topic-page .product-actions > *,
+  .dashboard-home.topic-page .product-detail-actions > * {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .dashboard-home.whoop-home .cart-item,
+  .dashboard-home.whoop-home .checkout-item,
+  .dashboard-home.whoop-home .review-card,
+  .dashboard-home.whoop-home .whoop-split-card,
+  .dashboard-home.whoop-home .whoop-metric-card,
+  .dashboard-home.whoop-home .collection-card,
+  .dashboard-home.topic-page .cart-item,
+  .dashboard-home.topic-page .checkout-item,
+  .dashboard-home.topic-page .review-card,
+  .dashboard-home.topic-page .whoop-split-card,
+  .dashboard-home.topic-page .whoop-metric-card,
+  .dashboard-home.topic-page .collection-card {
+    max-width: 100%;
+  }
+
+  .dashboard-home.whoop-home .cart-item-image,
+  .dashboard-home.whoop-home .checkout-item-img,
+  .dashboard-home.topic-page .cart-item-image,
+  .dashboard-home.topic-page .checkout-item-img {
+    min-height: 160px;
+  }
+
+  .dashboard-home.whoop-home .collection-chip-row,
+  .dashboard-home.whoop-home .whoop-insight-tabs,
+  .dashboard-home.whoop-home .watch-story-benefits,
+  .dashboard-home.whoop-home .wear-benefit-strip,
+  .dashboard-home.topic-page .collection-chip-row,
+  .dashboard-home.topic-page .whoop-insight-tabs,
+  .dashboard-home.topic-page .watch-story-benefits,
+  .dashboard-home.topic-page .wear-benefit-strip {
+    max-width: 100%;
+    overflow-x: auto !important;
+    padding-bottom: 8px;
+  }
+
+  .dashboard-home.whoop-home .fit-finder-modal,
+  .dashboard-home.whoop-home .health-deal-modal,
+  .dashboard-home.whoop-home .review-modal,
+  .dashboard-home.whoop-home .health-topic-modal,
+  .dashboard-home.topic-page .fit-finder-modal,
+  .dashboard-home.topic-page .health-deal-modal,
+  .dashboard-home.topic-page .review-modal,
+  .dashboard-home.topic-page .health-topic-modal {
+    padding: 12px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .dashboard-home.whoop-home .dashboard-nav,
+  .dashboard-home.topic-page .dashboard-nav {
+    gap: 10px !important;
+  }
+
+  .dashboard-home.whoop-home .nav-logo-word,
+  .dashboard-home.topic-page .nav-logo-word {
+    max-width: 76px;
+    font-size: 0.82rem !important;
+    letter-spacing: 0.16em !important;
+  }
+
+  .dashboard-home.whoop-home .nav-logo-mark,
+  .dashboard-home.topic-page .nav-logo-mark {
+    width: 34px !important;
+    height: 34px !important;
+    flex-basis: 34px !important;
+  }
+
+  .dashboard-home.whoop-home .dashboard-title,
+  .dashboard-home.topic-page .dashboard-title {
+    font-size: clamp(2.65rem, 16vw, 3.45rem) !important;
+  }
+
+  .dashboard-home.whoop-home .section-title,
+  .dashboard-home.whoop-home .product-detail-title,
+  .dashboard-home.topic-page .section-title,
+  .dashboard-home.topic-page .product-detail-title {
+    font-size: clamp(2.25rem, 13vw, 3.05rem) !important;
+  }
+
+  .dashboard-home.whoop-home .section-label,
+  .dashboard-home.whoop-home .hero-badge,
+  .dashboard-home.whoop-home .eyebrow,
+  .dashboard-home.topic-page .section-label,
+  .dashboard-home.topic-page .hero-badge,
+  .dashboard-home.topic-page .eyebrow {
+    max-width: 100%;
+    letter-spacing: 0.1em !important;
+    line-height: 1.35;
+  }
+
+  .dashboard-home.whoop-home .watch-story-media-shell,
+  .dashboard-home.whoop-home .wear-video-shell,
+  .dashboard-home.topic-page .watch-story-media-shell,
+  .dashboard-home.topic-page .wear-video-shell {
+    min-height: 380px !important;
+  }
+
+  .dashboard-home.whoop-home .product-detail-image-box,
+  .dashboard-home.whoop-home .collection-header-visual,
+  .dashboard-home.whoop-home .collection-photo,
+  .dashboard-home.whoop-home .collection-showcase-image,
+  .dashboard-home.topic-page .product-detail-image-box,
+  .dashboard-home.topic-page .collection-header-visual,
+  .dashboard-home.topic-page .collection-photo,
+  .dashboard-home.topic-page .collection-showcase-image {
+    min-height: 240px !important;
+  }
+}
