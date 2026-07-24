@@ -15757,3 +15757,240 @@ svg {
     min-height: 240px !important;
   }
 }
+
+/* --- PHONE OVERLAP GUARD ---------------------------------------------- */
+@media (max-width: 720px) {
+  .dashboard-home.whoop-home .watch-story-stage {
+    min-height: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-pin {
+    position: static !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-media-shell {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    align-items: start !important;
+    gap: 16px !important;
+    width: 100% !important;
+    min-height: auto !important;
+    height: auto !important;
+    padding: 26px 16px !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-video,
+  .dashboard-home.whoop-home .watch-story-overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-video {
+    opacity: 0.34 !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-hero-copy,
+  .dashboard-home.whoop-home .watch-story-day-rail,
+  .dashboard-home.whoop-home .watch-story-rail,
+  .dashboard-home.whoop-home .watch-story-benefits {
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    transform: none !important;
+    z-index: 2 !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-hero-copy {
+    display: grid !important;
+    justify-items: start !important;
+    gap: 12px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-hero-title {
+    max-width: 100% !important;
+    font-size: clamp(2.35rem, 11vw, 3.35rem) !important;
+    line-height: 0.96 !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-hero-sub {
+    max-width: 100% !important;
+    font-size: 1rem !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-day-rail {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    margin: 2px 0 0 !important;
+    padding: 0 !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-day {
+    min-width: 0 !important;
+    width: 100% !important;
+    justify-content: flex-start !important;
+    white-space: normal !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-rail {
+    display: grid !important;
+    height: auto !important;
+    min-height: 0 !important;
+    perspective: none !important;
+    pointer-events: auto !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-card {
+    position: relative !important;
+    display: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 0 !important;
+    padding: 18px !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-card.is-active,
+  .dashboard-home.whoop-home .watch-story-card.is-visible {
+    display: grid !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-card::before,
+  .dashboard-home.whoop-home .watch-story-card::after {
+    display: none !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-card-visual {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    min-height: 0 !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-visual-line,
+  .dashboard-home.whoop-home .watch-story-visual-timeline {
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-visual-habits {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-visual-chip {
+    min-width: 0 !important;
+    white-space: normal !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-benefits {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    margin-top: 0 !important;
+    overflow: visible !important;
+  }
+
+  .dashboard-home.whoop-home .whoop-hero-visual,
+  .dashboard-home.whoop-home .whoop-device-scene,
+  .dashboard-home.whoop-home .whoop-visual-stage {
+    display: grid !important;
+    gap: 12px !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  .dashboard-home.whoop-home .whoop-floating-stat {
+    position: static !important;
+    inset: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    transform: none !important;
+  }
+
+  .dashboard-home.whoop-home .cart-item,
+  .dashboard-home.whoop-home .checkout-item,
+  .dashboard-home.topic-page .cart-item,
+  .dashboard-home.topic-page .checkout-item {
+    align-items: start !important;
+    gap: 12px !important;
+  }
+
+  .dashboard-home.whoop-home .cart-item-name,
+  .dashboard-home.whoop-home .checkout-item-name,
+  .dashboard-home.whoop-home .product-card-name,
+  .dashboard-home.whoop-home .product-detail-title,
+  .dashboard-home.topic-page .cart-item-name,
+  .dashboard-home.topic-page .checkout-item-name,
+  .dashboard-home.topic-page .product-card-name,
+  .dashboard-home.topic-page .product-detail-title {
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+  }
+
+  .dashboard-home.whoop-home .review-modal-dialog,
+  .dashboard-home.whoop-home .fit-finder-dialog,
+  .dashboard-home.whoop-home .health-deal-dialog,
+  .dashboard-home.whoop-home .health-topic-dialog,
+  .dashboard-home.topic-page .review-modal-dialog,
+  .dashboard-home.topic-page .fit-finder-dialog,
+  .dashboard-home.topic-page .health-deal-dialog,
+  .dashboard-home.topic-page .health-topic-dialog {
+    width: min(100%, calc(100vw - 24px)) !important;
+    max-height: calc(100dvh - 24px) !important;
+    overflow-y: auto !important;
+  }
+}
+
+@media (max-width: 460px) {
+  .dashboard-home.whoop-home .watch-story-media-shell {
+    padding: 22px 14px !important;
+    gap: 14px !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-hero-kicker {
+    grid-template-columns: auto 1fr !important;
+    width: 100% !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-day-rail,
+  .dashboard-home.whoop-home .watch-story-visual-habits {
+    grid-template-columns: 1fr !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-card {
+    padding: 16px !important;
+  }
+
+  .dashboard-home.whoop-home .cart-item,
+  .dashboard-home.whoop-home .checkout-item,
+  .dashboard-home.topic-page .cart-item,
+  .dashboard-home.topic-page .checkout-item {
+    grid-template-columns: 1fr !important;
+  }
+
+  .dashboard-home.whoop-home .cart-item-image,
+  .dashboard-home.whoop-home .checkout-item-img,
+  .dashboard-home.topic-page .cart-item-image,
+  .dashboard-home.topic-page .checkout-item-img {
+    width: 100% !important;
+    min-height: 180px !important;
+  }
+}
