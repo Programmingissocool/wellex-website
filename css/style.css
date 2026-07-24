@@ -15994,3 +15994,345 @@ svg {
     min-height: 180px !important;
   }
 }
+
+/* --- DEVICE FIT LAYER: desktop stays unchanged above 1024px ------------ */
+@media (max-width: 1024px) {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .dashboard-home.whoop-home,
+  .dashboard-home.topic-page,
+  .dashboard-home.whoop-home *,
+  .dashboard-home.whoop-home *::before,
+  .dashboard-home.whoop-home *::after,
+  .dashboard-home.topic-page *,
+  .dashboard-home.topic-page *::before,
+  .dashboard-home.topic-page *::after {
+    box-sizing: border-box;
+  }
+
+  .dashboard-home.whoop-home img,
+  .dashboard-home.topic-page img,
+  .dashboard-home.whoop-home video,
+  .dashboard-home.topic-page video {
+    max-width: 100%;
+  }
+
+  .dashboard-home.whoop-home .dashboard-nav,
+  .dashboard-home.topic-page .dashboard-nav {
+    max-width: 100vw;
+  }
+
+  .dashboard-home.whoop-home .page-header,
+  .dashboard-home.whoop-home .section,
+  .dashboard-home.whoop-home .dashboard-hero,
+  .dashboard-home.whoop-home .product-detail,
+  .dashboard-home.whoop-home .cart-page,
+  .dashboard-home.whoop-home .checkout-page,
+  .dashboard-home.topic-page .page-header,
+  .dashboard-home.topic-page .section,
+  .dashboard-home.topic-page .dashboard-hero,
+  .dashboard-home.topic-page .product-detail,
+  .dashboard-home.topic-page .cart-page,
+  .dashboard-home.topic-page .checkout-page {
+    max-width: 100vw !important;
+    overflow-x: clip;
+  }
+
+  .dashboard-home.whoop-home .collection-header,
+  .dashboard-home.whoop-home .collection-header-intro,
+  .dashboard-home.whoop-home .collection-header-copy,
+  .dashboard-home.whoop-home .collection-showcase-grid,
+  .dashboard-home.whoop-home .product-detail-inner,
+  .dashboard-home.whoop-home .cart-inner,
+  .dashboard-home.whoop-home .checkout-inner,
+  .dashboard-home.topic-page .collection-header,
+  .dashboard-home.topic-page .collection-header-intro,
+  .dashboard-home.topic-page .collection-header-copy,
+  .dashboard-home.topic-page .collection-showcase-grid,
+  .dashboard-home.topic-page .product-detail-inner,
+  .dashboard-home.topic-page .cart-inner,
+  .dashboard-home.topic-page .checkout-inner {
+    width: min(100%, 100vw) !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .dashboard-home.whoop-home .page-photo-backdrop,
+  .dashboard-home.topic-page .page-photo-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    pointer-events: none;
+  }
+
+  .dashboard-home.whoop-home .page-photo-backdrop img,
+  .dashboard-home.topic-page .page-photo-backdrop img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .dashboard-home.whoop-home .whoop-health-picture-showcase,
+  .dashboard-home.whoop-home .whoop-band-grid,
+  .dashboard-home.whoop-home .whoop-metric-row,
+  .dashboard-home.whoop-home .whoop-reference-grid,
+  .dashboard-home.whoop-home .whoop-hero-points,
+  .dashboard-home.whoop-home .whoop-split-grid,
+  .dashboard-home.whoop-home .whoop-app-grid,
+  .dashboard-home.topic-page .whoop-health-picture-showcase,
+  .dashboard-home.topic-page .whoop-band-grid,
+  .dashboard-home.topic-page .whoop-metric-row,
+  .dashboard-home.topic-page .whoop-reference-grid,
+  .dashboard-home.topic-page .whoop-hero-points,
+  .dashboard-home.topic-page .whoop-split-grid,
+  .dashboard-home.topic-page .whoop-app-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  body.dashboard-home.whoop-home .whoop-health-picture-showcase {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  body.dashboard-home.whoop-home .whoop-health-picture-showcase .whoop-health-feature,
+  body.dashboard-home.whoop-home .whoop-health-picture-showcase .whoop-health-feature-large,
+  body.dashboard-home.whoop-home .whoop-health-picture-showcase .whoop-health-feature-wide {
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  body.dashboard-home.whoop-home.topic-page .collection-chip-row,
+  body.dashboard-home.topic-page .collection-chip-row {
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .dashboard-home.whoop-home .page-header,
+  .dashboard-home.whoop-home .section,
+  .dashboard-home.whoop-home .dashboard-hero,
+  .dashboard-home.whoop-home .product-detail-inner,
+  .dashboard-home.whoop-home .cart-inner,
+  .dashboard-home.whoop-home .checkout-inner,
+  .dashboard-home.topic-page .page-header,
+  .dashboard-home.topic-page .section,
+  .dashboard-home.topic-page .dashboard-hero,
+  .dashboard-home.topic-page .product-detail-inner,
+  .dashboard-home.topic-page .cart-inner,
+  .dashboard-home.topic-page .checkout-inner {
+    padding-left: clamp(14px, 4vw, 22px) !important;
+    padding-right: clamp(14px, 4vw, 22px) !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-stage.section {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-media-shell {
+    padding-left: clamp(12px, 4vw, 18px) !important;
+    padding-right: clamp(12px, 4vw, 18px) !important;
+    overflow: visible !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-rail,
+  .dashboard-home.whoop-home .watch-story-day-rail,
+  .dashboard-home.whoop-home .watch-story-benefits,
+  .dashboard-home.whoop-home .fit-meta-row,
+  .dashboard-home.whoop-home .fit-options,
+  .dashboard-home.whoop-home .collection-chip-row,
+  .dashboard-home.whoop-home.topic-page .collection-chip-row,
+  .dashboard-home.topic-page .collection-chip-row,
+  .dashboard-home.whoop-home .product-thumbnails,
+  .dashboard-home.whoop-home.topic-page .product-thumbnails,
+  .dashboard-home.topic-page .product-thumbnails {
+    position: static !important;
+    inset: auto !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    gap: 10px !important;
+    overflow: visible !important;
+    transform: none !important;
+  }
+
+  body.dashboard-home.whoop-home .whoop-health-picture-showcase {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  body.dashboard-home.whoop-home .whoop-health-picture-showcase .whoop-health-feature,
+  body.dashboard-home.whoop-home .whoop-health-picture-showcase .whoop-health-feature-large,
+  body.dashboard-home.whoop-home .whoop-health-picture-showcase .whoop-health-feature-wide {
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  body.dashboard-home.whoop-home.topic-page .collection-chip-row,
+  body.dashboard-home.topic-page .collection-chip-row {
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    transform: none !important;
+  }
+
+  .dashboard-home.whoop-home .watch-story-card,
+  .dashboard-home.whoop-home .watch-story-card.is-active,
+  .dashboard-home.whoop-home .watch-story-card.is-visible,
+  .dashboard-home.whoop-home .collection-chip,
+  .dashboard-home.whoop-home.topic-page .collection-chip,
+  .dashboard-home.topic-page .collection-chip,
+  .dashboard-home.whoop-home .fit-chip,
+  .dashboard-home.whoop-home .fit-skip-btn,
+  .dashboard-home.whoop-home .fit-option,
+  .dashboard-home.whoop-home .product-thumb,
+  .dashboard-home.whoop-home.topic-page .product-thumb,
+  .dashboard-home.topic-page .product-thumb {
+    left: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    transform: none !important;
+    white-space: normal !important;
+  }
+
+  .dashboard-home.whoop-home .whoop-health-picture-showcase,
+  .dashboard-home.whoop-home .whoop-band-grid,
+  .dashboard-home.whoop-home .whoop-metric-row,
+  .dashboard-home.whoop-home .whoop-reference-grid,
+  .dashboard-home.whoop-home .whoop-hero-points,
+  .dashboard-home.whoop-home .whoop-split-grid,
+  .dashboard-home.whoop-home .whoop-app-grid,
+  .dashboard-home.whoop-home .cart-recommendations-grid,
+  .dashboard-home.whoop-home .products-grid,
+  .dashboard-home.topic-page .whoop-health-picture-showcase,
+  .dashboard-home.topic-page .whoop-band-grid,
+  .dashboard-home.topic-page .whoop-metric-row,
+  .dashboard-home.topic-page .whoop-reference-grid,
+  .dashboard-home.topic-page .whoop-hero-points,
+  .dashboard-home.topic-page .whoop-split-grid,
+  .dashboard-home.topic-page .whoop-app-grid,
+  .dashboard-home.topic-page .cart-recommendations-grid,
+  .dashboard-home.topic-page .products-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .dashboard-home.whoop-home .whoop-health-picture-section .whoop-health-feature,
+  .dashboard-home.whoop-home .whoop-health-picture-section .whoop-health-feature-large,
+  .dashboard-home.whoop-home .whoop-health-picture-section .whoop-health-feature-wide {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .dashboard-home.whoop-home .fit-finder-dialog,
+  .dashboard-home.whoop-home .health-deal-dialog,
+  .dashboard-home.whoop-home .review-modal-dialog,
+  .dashboard-home.topic-page .fit-finder-dialog,
+  .dashboard-home.topic-page .health-deal-dialog,
+  .dashboard-home.topic-page .review-modal-dialog {
+    width: min(100%, calc(100vw - 24px)) !important;
+    max-height: calc(100dvh - 24px) !important;
+    overflow-y: auto !important;
+  }
+
+  .dashboard-home.whoop-home .fit-finder-hero h2,
+  .dashboard-home.whoop-home .watch-story-card .section-title {
+    max-width: 100% !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+    overflow-wrap: anywhere !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .dashboard-home.whoop-home .product-thumbnails,
+  .dashboard-home.whoop-home.topic-page .product-thumbnails,
+  .dashboard-home.topic-page .product-thumbnails {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .dashboard-home.whoop-home .summary-row,
+  .dashboard-home.topic-page .summary-row,
+  .dashboard-home.whoop-home .promo-input,
+  .dashboard-home.topic-page .promo-input {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .dashboard-home.whoop-home .cart-summary-btn,
+  .dashboard-home.whoop-home .checkout-place-btn,
+  .dashboard-home.topic-page .cart-summary-btn,
+  .dashboard-home.topic-page .checkout-place-btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+}
