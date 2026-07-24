@@ -1569,8 +1569,9 @@ function initDayPhaseTheme() {
 
 function initStoryCards() {
   const stage = document.querySelector('.watch-story-stage');
+  const pin = document.querySelector('.watch-story-pin');
   const cards = [...document.querySelectorAll('.watch-story-card[data-story-index]')];
-  if (!stage || !cards.length) return;
+  if (!stage || !pin || !cards.length) return;
 
   const isMobile = () => window.innerWidth <= 720;
   const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
@@ -1579,36 +1580,70 @@ function initStoryCards() {
   const applyDesktopStory = () => {
     const rect = stage.getBoundingClientRect();
     const viewportHeight = window.innerHeight || 1;
+    const stageStart = stage.offsetTop;
     const totalScroll = Math.max(stage.offsetHeight - viewportHeight, 1);
-    const traveled = Math.min(Math.max(-rect.top, 0), totalScroll);
+    const traveled = Math.min(Math.max(window.scrollY - stageStart, 0), totalScroll);
     const progress = traveled / totalScroll;
-    const hasStarted = progress > 0.13;
     const easedProgress = easeInOut(progress);
     const spin = easedProgress * (cards.length - 1);
-    const activeIndex = Math.min(cards.length - 1, Math.max(0, Math.round(spin)));
+    const activeIndex = Math.min(cards.length - 1, Math.floor(progress * cards.length));
+
+    if (window.scrollY < stageStart) {
+      pin.style.removeProperty('position');
+      pin.style.removeProperty('top');
+      pin.style.removeProperty('left');
+      pin.style.removeProperty('right');
+      pin.style.removeProperty('bottom');
+      pin.style.removeProperty('width');
+      pin.style.removeProperty('z-index');
+    } else if (window.scrollY <= stageStart + totalScroll) {
+      pin.style.position = 'fixed';
+      pin.style.top = '0';
+      pin.style.left = `${rect.left}px`;
+      pin.style.right = 'auto';
+      pin.style.bottom = 'auto';
+      pin.style.width = `${rect.width}px`;
+      pin.style.zIndex = '5';
+    } else {
+      pin.style.position = 'absolute';
+      pin.style.top = 'auto';
+      pin.style.left = '0';
+      pin.style.right = '0';
+      pin.style.bottom = '0';
+      pin.style.width = '100%';
+      pin.style.zIndex = '5';
+    }
 
     cards.forEach((card, index) => {
       const delta = index - spin;
       const distance = Math.abs(delta);
       const proximity = clamp(1 - distance, 0, 1);
-      const isActive = hasStarted && distance < 0.5;
+      const isActive = index === activeIndex;
       const y = delta * 168;
       const z = -Math.min(distance * 250, 420);
       const rotate = delta * -20;
       const scale = 0.84 + (proximity * 0.16);
-      const opacity = proximity > 0.04 ? Math.pow(proximity, 1.45) : 0;
+      const opacity = index === activeIndex ? 1 : (proximity > 0.04 ? Math.pow(proximity, 1.45) : 0);
 
       card.style.setProperty('--story-card-y', `${y}px`);
       card.style.setProperty('--story-card-z', `${z}px`);
       card.style.setProperty('--story-card-rotate', `${rotate}deg`);
       card.style.setProperty('--story-card-scale', `${scale}`);
-      card.style.setProperty('--story-card-opacity', `${hasStarted ? opacity : 0}`);
-      card.classList.toggle('is-visible', hasStarted);
-      card.classList.toggle('is-active', isActive && index === activeIndex);
+      card.style.setProperty('--story-card-opacity', `${opacity}`);
+      card.classList.add('is-visible');
+      card.classList.toggle('is-active', isActive);
     });
   };
 
   const applyMobileStory = () => {
+    pin.style.removeProperty('position');
+    pin.style.removeProperty('top');
+    pin.style.removeProperty('left');
+    pin.style.removeProperty('right');
+    pin.style.removeProperty('bottom');
+    pin.style.removeProperty('width');
+    pin.style.removeProperty('z-index');
+
     cards.forEach((card, index) => {
       card.classList.add('is-visible');
       card.classList.toggle('is-active', index === 0);

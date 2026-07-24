@@ -9281,14 +9281,17 @@ footer {
   padding: 0 !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
-  min-height: 300vh;
+  min-height: 440vh;
   display: block;
+  overflow-anchor: none;
 }
 
 .dashboard-home.whoop-home .watch-story-pin {
   position: sticky;
   top: 0;
   width: 100%;
+  min-height: 100vh;
+  overflow-anchor: none;
 }
 
 .dashboard-home.whoop-home .watch-story-media-shell {
