@@ -33,7 +33,6 @@ jobs:
           mkdir -p site
           cp *.html site/
           cp -R css js assets site/
-          cp CNAME site/
 
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
